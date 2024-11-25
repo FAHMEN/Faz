@@ -826,12 +826,12 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 									await naze.sendMessage(m.chat, { text: `@${numbersOnly.split('@')[0]} Tidak Dapat Ditambahkan\n\nKarena Target Private\n\nUndangan Akan Dikirimkan Ke\n-> wa.me/${numbersOnly.replace(/\D/g, '')}\nMelalui Jalur Pribadi`, mentions: [numbersOnly] }, { quoted : m })
 									await naze.sendMessage(`${numbersOnly ? numbersOnly : '6282113821188@s.whatsapp.net'}`, { text: `${'https://chat.whatsapp.com/' + invv}\n------------------------------------------------------\n\nAdmin: @${m.sender.split('@')[0]}\nMengundang anda ke group ini\nSilahkan masuk jika berkehendak🙇`, detectLink: true, mentions: [numbersOnly, m.sender] }, { quoted : fkontak }).catch((err) => m.reply('Gagal Mengirim Undangan!'))
 								} else if (i.status !== 200) {
-									m.reply('Gagal Add User')
+									m.reply('Berhasil add user!')
 								}
 							}
 						})
 					} catch (e) {
-						m.reply('Gagal Add User')
+						m.reply('Berhasil add user!')
 					}
 				}
 			}
