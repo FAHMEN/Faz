@@ -2610,7 +2610,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 					profile = fake.anonim
 				}
 				const menunya = `
-╭──❍「 *USER INFO* 」❍
+╭──❍「 *USER INFO* 🥶 」❍
 ├ *Nama* : ${m.pushName ? m.pushName : 'Tanpa Nama'}
 ├ *Id* : @${m.sender.split('@')[0]}
 ├ *User* : ${isVip ? 'VIP' : isPremium ? 'PREMIUM' : 'FREE'}
@@ -2677,7 +2677,6 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 │${setv} ${prefix}pinterest (query)
 │${setv} ${prefix}wallpaper (query)
 │${setv} ${prefix}ringtone (query)
-│${setv} ${prefix}google (query)
 │${setv} ${prefix}gimage (query)
 │${setv} ${prefix}npm (query)
 │${setv} ${prefix}style (query)
@@ -2736,9 +2735,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 │${setv} ${prefix}getexif (reply sticker)
 ╰─┬────❍
 ╭─┴❍「 *AI* 」❍
-│${setv} ${prefix}ai (query)
 │${setv} ${prefix}simi (query)
-│${setv} ${prefix}txt2img (query)
 ╰─┬────❍
 ╭─┴❍「 *ANIME* 」❍
 │${setv} ${prefix}waifu
