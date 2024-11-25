@@ -2239,7 +2239,94 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 				}
 			}
 			break
-			
+			const sendToGemini = async (prompt) => {
+    const apiKey = 'AIzaSyB2mvsGVTZAU-h-GtCLzoLhjHEdvugx9uQ'; // Dapatkan apikey dari  https://aistudio.google.com/app/apikey
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+    //wm hann
+    const body = {
+        contents: [
+            {
+                parts: [
+                    { text: prompt }
+                ]
+            }
+        ]
+    };
+//wm hann
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            return data; 
+        } else {
+            throw new Error(data.error.message || 'Request failed');
+        }
+    } catch (error) {
+        console.error('Error:', error.message);
+        return null;
+    }
+};
+//wm hann
+const prompt = `Nama kamu adalah Kurumi, kamu adalah assisten virtual yang dikembangkan langsung dari google.`;
+    const combinedPrompt = `${prompt} ${text}`;
+//wm hann
+    try {
+        // Mengirim prompt ke API Gemini
+        const response = await sendToGemini(combinedPrompt);
+//wm hann
+        if (response) {
+//wm hann
+            const candidates = response.candidates;
+            let message = candidates && candidates.length > 0
+                ? candidates[0].content.parts[0].text
+                : 'Tidak ada respons yang diterima dari model.';
+            //wm hann
+            // Mengganti ** dengan * dan mengedit jawaban jika perlu
+            messagee = message.replace(/\*\*/g, '*').replace(/#{2,}/g, '#');
+        } else {
+//wm hann
+            Rifky.sendMessage(
+                m.chat,
+                { text: 'Gagal mendapatkan respons dari Gemini.' },
+                { quoted: m }
+            );
+        }
+    } catch (error) {
+        console.error(error);
+//wm hann
+        Rifky.sendMessage(
+            m.chat,
+            { text: 'Terjadi kesalahan saat memproses permintaan Anda.' },
+            { quoted: m }
+        );
+    }
+//wm hann
+    try {
+//wm hann
+        let res = await generateVoice(messagee)
+await m.reply(messagee)
+        if (res) await Rifky.sendMessage(m.chat, {
+        audio: res,
+        mimetype: 'audio/mp4',
+        ptt: true,
+        waveform: [100, 0, 100, 0, 100, 0, 100]
+    }, {
+        quoted: m
+    })
+    } catch (e) {
+        await m.reply(e)
+    }
+//wm hann
+}
+break
 			// Fun Menu
 			case 'dadu': {
 				let ddsa = [{ url: 'https://telegra.ph/file/9f60e4cdbeb79fc6aff7a.png', no: 1 },{ url: 'https://telegra.ph/file/797f86e444755282374ef.png', no: 2 },{ url: 'https://telegra.ph/file/970d2a7656ada7c579b69.png', no: 3 },{ url: 'https://telegra.ph/file/0470d295e00ebe789fb4d.png', no: 4 },{ url: 'https://telegra.ph/file/a9d7332e7ba1d1d26a2be.png', no: 5 },{ url: 'https://telegra.ph/file/99dcd999991a79f9ba0c0.png', no: 6 }]
