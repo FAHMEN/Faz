@@ -27,7 +27,7 @@ global.fake = {
 
 global.my = {
 	yt: 'https://youtube.com/c/FAZGAM',
-	gh: 'https://github.com/faz',
+	gh: 'https://relaxmusic.rf.gd',
 	gc: 'https://chat.whatsapp.com/bxbbxnxn',
 	ch: 'dhxh26721@newsletter',
 }
