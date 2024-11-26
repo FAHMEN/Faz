@@ -929,6 +929,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			break
 			case 'delete': case 'del': case 'd': {
 				if (!m.quoted) return m.reply('Reply pesan yang mau di delete')
+				if (!isCreator) return m.reply(mess.owner)
 				await naze.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: m.isBotAdmin ? false : true, id: m.quoted.id, participant: m.quoted.sender }})
 			}
 			break
