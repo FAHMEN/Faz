@@ -795,7 +795,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 						},
 						externalAdReply: {
 							title: author,
-							body: 'Subscribe My YouTube',
+							body: 'Beli sc 30k paket lengkap',
 							thumbnail: fake.thumbnail,
 							mediaType: 2,
 							mediaUrl: my.yt,
@@ -825,7 +825,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 								if (i.status == 500) return m.reply('Grub Penuh!')
 								if (i.status == 403) {
 									await naze.sendMessage(m.chat, { text: `@${numbersOnly.split('@')[0]} Tidak Dapat Ditambahkan\n\nKarena Target Private\n\nUndangan Akan Dikirimkan Ke\n-> wa.me/${numbersOnly.replace(/\D/g, '')}\nMelalui Jalur Pribadi`, mentions: [numbersOnly] }, { quoted : m })
-									await naze.sendMessage(`${numbersOnly ? numbersOnly : '6282113821188@s.whatsapp.net'}`, { text: `${'https://chat.whatsapp.com/' + invv}\n------------------------------------------------------\n\nAdmin: @${m.sender.split('@')[0]}\nMengundang anda ke group ini\nSilahkan masuk jika berkehendak🙇`, detectLink: true, mentions: [numbersOnly, m.sender] }, { quoted : fkontak }).catch((err) => m.reply('Gagal Mengirim Undangan!'))
+									await naze.sendMessage(`${numbersOnly ? numbersOnly : '6285876902820@s.whatsapp.net'}`, { text: `${'https://chat.whatsapp.com/' + invv}\n------------------------------------------------------\n\nAdmin: @${m.sender.split('@')[0]}\nMengundang anda ke group ini\nSilahkan masuk jika berkehendak🙇`, detectLink: true, mentions: [numbersOnly, m.sender] }, { quoted : fkontak }).catch((err) => m.reply('Gagal Mengirim Undangan!'))
 								} else if (i.status !== 200) {
 									m.reply('Berhasil add user!')
 								}
@@ -2120,6 +2120,21 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 				}
 			}
 			break
+						case 'donate': case 'donasi': {
+    await naze.sendMessage(m.chat, {
+        text: `Berikut adalah informasi untuk donasi:\n\n✨ *Dana*: 085876902820\n✨ *Saweria*: https://saweria.co/Fahrilgg\n\nDukungan Anda sangat berarti!`, 
+					contextInfo: {
+						forwardingScore: 10,
+						isForwarded: true,
+						forwardedNewsletterMessageInfo: {
+							newsletterJid: my.ch,
+							serverMessageId: null,
+							newsletterName: 'Join For More Info'
+						}
+					}
+				}, { quoted: m })
+			}
+			break
 			case 'ttmp3': case 'tiktokmp3': case 'ttaudio': case 'tiktokaudio': {
 				if (!text) return m.reply(`Example: ${prefix + command} url_tiktok`)
 				if (!text.includes('tiktok.com')) return m.reply('Url Tidak Mengandung Result Dari Tiktok!')
@@ -2618,6 +2633,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 ├ *User* : ${isVip ? 'VIP' : isPremium ? 'PREMIUM' : 'FREE'}
 ├ *Limit* : ${isVip ? 'VIP' : db.users[m.sender].limit }
 ├ *Uang* : ${db.users[m.sender] ? db.users[m.sender].uang.toLocaleString('id-ID') : '0'}
+├_ja
 ╰─┬────❍
 ╭─┴─❍「 *BOT INFO* 」❍
 ├ *Nama Bot* : ${botname}
@@ -2630,6 +2646,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 ├ *Tanggal* : ${tanggal}
 ├ *Hari* : ${hari}
 ├ *Jam* : ${jam} WIB
+├*Jangan lupa donasi (.donate) agar bot selalu on*
 ╰──────❍
 ╭──❍「 *BOT* 」❍
 │${setv} ${prefix}profile
