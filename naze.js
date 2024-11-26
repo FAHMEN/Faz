@@ -550,6 +550,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			}
 			break
 			case 'listblock': {
+			if (!isCreator) return m.reply(mess.owner)
 				let anu = await naze.fetchBlocklist()
 				m.reply(`Total Block : ${anu.length}\n` + anu.map(v => '• ' + v.replace(/@.+/, '')).join`\n`)
 			}
@@ -783,7 +784,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			break
 			case 'sc': case 'script': {
 				await naze.sendMessage(m.chat, {
-					text: `https://github.com/nazedev/hitori\n⬆️ Itu Sc nya cuy`,
+					text: `https://wa.me/6285876902820\n⬆️ Sc wa owner 30k aja`,
 					contextInfo: {
 						forwardingScore: 10,
 						isForwarded: true,
@@ -1556,7 +1557,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			}
 			break
 			case 'ssweb': {
-				if (!text) return m.reply(`Example: ${prefix + command} https://github.com/nazedev/naze-md`)
+				if (!text) return m.reply(`Example: ${prefix + command} https://relaxmusic.rf.gd`)
 				try {
 					if (!text.startsWith('http')) {
 						let buf = 'https://image.thum.io/get/width/1900/crop/1000/fullpage/https://' + q;
@@ -1852,7 +1853,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			}
 			break
 			case 'tinyurl': case 'shorturl': case 'shortlink': {
-				if (!text || !isUrl(text)) return m.reply(`Example: ${prefix + command} https://github.com/nazedev/hitori`)
+				if (!text || !isUrl(text)) return m.reply(`Example: ${prefix + command} https://relaxmusic.rf.gd`)
 				try {
 					let anu = await axios.get('https://tinyurl.com/api-create.php?url=' + text)
 					m.reply('Url : ' + anu.data)
@@ -1862,7 +1863,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			}
 			break
 			case 'git': case 'gitclone': {
-				if (!args[0]) return m.reply(`Example: ${prefix + command} https://github.com/nazedev/hitori`)
+				if (!args[0]) return m.reply(`Example: ${prefix + command} https://github.com/xxxx/xxx`)
 				if (!isUrl(args[0]) && !args[0].includes('github.com')) return m.reply('Gunakan Url Github!')
 				let [, user, repo] = args[0].match(/(?:https|git)(?::\/\/|@)github\.com[\/:]([^\/:]+)\/(.+)/i) || []
 				try {
