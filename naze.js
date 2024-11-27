@@ -622,6 +622,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			case 'creategc': case 'buatgc': {
 				if (!isCreator) return m.reply(mess.owner)
 				if (!text) return m.reply(`Example:\n${prefix + command} *Nama Gc*`)
+				if (!isPremium) return m.reply(mess.prem)
 				let group = await naze.groupCreate(q, [m.sender])
 				let res = await naze.groupInviteCode(group.id)
 				await naze.sendMessage(m.chat, { text: `*Link Group :* *https://chat.whatsapp.com/${res}*\n\n*Nama Group :* *${q}*`, detectLink: true }, { quoted: m });
@@ -1887,6 +1888,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			break
 			case 'simi': {
 				if (!text) return m.reply(`Example: ${prefix + command} query`)
+				if (!isPremium) return m.reply(mess.prem)
 				try {
 					const hasil = await simi(text)
 					m.reply(hasil.success)
@@ -2237,6 +2239,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			
 			// Anime Menu
 			case 'waifu': {
+			   if (!isPremium) return m.reply(mess.prem)
 				if (text == 'nsfw') {
 					const res = await fetchJson('https://api.waifu.pics/nsfw/waifu')
 					await naze.sendFileUrl(m.chat, res.url, 'Random Waifu', m)
@@ -2723,13 +2726,13 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 │${setv} ${prefix}tovn (reply pesan)
 │${setv} ${prefix}toimage (reply pesan)
 │${setv} ${prefix}toptv (reply pesan)
-│${setv} ${prefix}tourl (reply pesan)
+│${setv} ${prefix}tourl (reply pesan) Ⓟ︎
 │${setv} ${prefix}tts (textnya)
 │${setv} ${prefix}toqr (textnya)
 │${setv} ${prefix}ssweb (url)
 │${setv} ${prefix}sticker (send/reply img)
 │${setv} ${prefix}colong (reply stiker)
-│${setv} ${prefix}smeme (send/reply img)
+│${setv} ${prefix}smeme (send/reply img) Ⓟ︎
 │${setv} ${prefix}emojimix 🙃+💀
 │${setv} ${prefix}nulis
 │${setv} ${prefix}readmore text1|text2
@@ -2754,11 +2757,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 │${setv} ${prefix}getexif (reply sticker)
 ╰─┬────❍
 ╭─┴❍「 *AI* 」❍
-│${setv} ${prefix}simi (query)
+│${setv} ${prefix}simi (query) Ⓟ︎
 ╰─┬────❍
 ╭─┴❍「 *ANIME* 」❍
-│${setv} ${prefix}waifu
-│${setv} ${prefix}neko
+│${setv} ${prefix}waifu Ⓟ︎
+│${setv} ${prefix}neko 
 ╰─┬────❍
 ╭─┴❍「 *GAME* 」❍
 │${setv} ${prefix}tictactoe
@@ -2806,14 +2809,14 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 │${setv} ${prefix}mode (public or self)
 │${setv} ${prefix}setbio
 │${setv} ${prefix}setppbot
-│${setv} ${prefix}join
+│${setv} ${prefix}join 
 │${setv} ${prefix}leave
 │${setv} ${prefix}block
 │${setv} ${prefix}listblock
 │${setv} ${prefix}openblock
 │${setv} ${prefix}listpc
 │${setv} ${prefix}listgc
-│${setv} ${prefix}creategc
+│${setv} ${prefix}creategc Ⓟ︎
 │${setv} ${prefix}addprem
 │${setv} ${prefix}delprem
 │${setv} ${prefix}listprem
