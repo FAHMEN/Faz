@@ -520,7 +520,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			}
 			break
 			case 'join': {
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isPremium) return m.reply(mess.prem)
 				if (!text) return m.reply('Masukkan Link Group!')
 				if (!isUrl(args[0]) && !args[0].includes('whatsapp.com')) return m.reply('Link Invalid!')
 				const result = args[0].split('https://chat.whatsapp.com/')[1]
@@ -619,7 +619,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			}
 			break
 			case 'creategc': case 'buatgc': {
-				if (!isCreator) return m.reply(mess.owner)
+				if (!isPremium) return m.reply(mess.prem)
 				if (!text) return m.reply(`Example:\n${prefix + command} *Nama Gc*`)
 				let group = await naze.groupCreate(q, [m.sender])
 				let res = await naze.groupInviteCode(group.id)
@@ -818,7 +818,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			break
 			case 'sc': case 'script': {
 				await naze.sendMessage(m.chat, {
-					text: `https://github.com/nazedev/hitori\n⬆️ Itu Sc nya cuy`,
+					text: `https://wa.me/6285876902820\n⬆️ sc ada di harga 35k cuy`,
 					contextInfo: {
 						forwardingScore: 10,
 						isForwarded: true,
@@ -829,8 +829,8 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 						},
 						externalAdReply: {
 							title: author,
-							body: 'Subscribe My YouTube',
-							thumbnail: fake.thumbnail,
+							body: 'SC murah paket lengkap',
+							thumbnailUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhyWYx5_IFWOx3de2MtnBrwxK_r1gcNhwa6w&s", 
 							mediaType: 2,
 							mediaUrl: my.yt,
 							sourceUrl: my.yt,
@@ -839,8 +839,19 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 				}, { quoted: m })
 			}
 			break
-			case 'donasi': case 'donate': {
-				m.reply('Donasi Dapat Melalui Url Dibawah Ini :\nhttps://saweria.co/naze')
+			case 'donate': case 'donasi': {
+    await naze.sendMessage(m.chat, {
+        text: `Berikut adalah informasi untuk donasi:\n\n✨ *Dana*: 085876902820\n✨ *Saweria*: https://saweria.co/Fahrilgg\n\nDukungan Anda sangat berarti!`, 
+					contextInfo: {
+						forwardingScore: 10,
+						isForwarded: true,
+						forwardedNewsletterMessageInfo: {
+							newsletterJid: my.ch,
+							serverMessageId: null,
+							newsletterName: 'Join For More Info'
+						}
+					}
+				}, { quoted: m })
 			}
 			break
 			
@@ -863,7 +874,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 								if (i.status == 500) return m.reply('Grub Penuh!')
 								if (i.status == 403) {
 									await naze.sendMessage(m.chat, { text: `@${numbersOnly.split('@')[0]} Tidak Dapat Ditambahkan\n\nKarena Target Private\n\nUndangan Akan Dikirimkan Ke\n-> wa.me/${numbersOnly.replace(/\D/g, '')}\nMelalui Jalur Pribadi`, mentions: [numbersOnly] }, { quoted : m })
-									await naze.sendMessage(`${numbersOnly ? numbersOnly : '6282113821188@s.whatsapp.net'}`, { text: `${'https://chat.whatsapp.com/' + invv}\n------------------------------------------------------\n\nAdmin: @${m.sender.split('@')[0]}\nMengundang anda ke group ini\nSilahkan masuk jika berkehendak🙇`, detectLink: true, mentions: [numbersOnly, m.sender] }, { quoted : fkontak }).catch((err) => m.reply('Gagal Mengirim Undangan!'))
+									await naze.sendMessage(`${numbersOnly ? numbersOnly : '6285876902820@s.whatsapp.net'}`, { text: `${'https://chat.whatsapp.com/' + invv}\n------------------------------------------------------\n\nAdmin: @${m.sender.split('@')[0]}\nMengundang anda ke group ini\nSilahkan masuk jika berkehendak🙇`, detectLink: true, mentions: [numbersOnly, m.sender] }, { quoted : fkontak }).catch((err) => m.reply('Gagal Mengirim Undangan!'))
 								} else if (i.status !== 200) {
 									m.reply('Gagal Add User')
 								}
@@ -1074,6 +1085,12 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 				await naze.sendFromOwner(owner, `Pesan Dari : @${m.sender.split('@')[0]}\nUntuk Owner\n\nRequest ${text}`, m, { contextInfo: { mentionedJid: [m.sender], isForwarded: true }})
 			}
 			break
+			case 'lapor': case 'report': {
+				if (!text) return m.reply('Mau lapor apa ke Owner?')
+				await naze.sendMessage(m.chat, { text: `*Laporan Telah Terkirim Ke Owner*\n_Terima Kasih🙏_` }, { quoted: m })
+				await naze.sendFromOwner(owner, `Pesan Dari : @${m.sender.split('@')[0]}\nUntuk Owner\n\nLapor ${text}`, m, { contextInfo: { mentionedJid: [m.sender], isForwarded: true }})
+			}
+			break
 			case 'totalfitur': {
 				const total = ((fs.readFileSync('./naze.js').toString()).match(/case '/g) || []).length
 				m.reply(`Total Fitur : ${total}`);
@@ -1242,6 +1259,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			}
 			break
 			case 'delmsg': case 'deletemsg': {
+			    if (!isPremium) return m.reply(mess.prem)
 				if (!text) return m.reply('Nama msg yg mau di delete?')
 				let msgs = db.database
 				if (text == 'allmsg') {
@@ -1293,7 +1311,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 						waktu: setTimeout(() => {
 							if (menfes[m.sender]) m.reply(`_Waktu ${command} habis_`)
 							delete menfes[m.sender];
-						}, 600000)
+						}, 3600000)
 					};
 					menfes[tujuan] = {
 						tujuan: m.sender,
@@ -1301,14 +1319,78 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 						waktu: setTimeout(() => {
 							if (menfes[tujuan]) naze.sendMessage(tujuan, { text: `_Waktu ${command} habis_` });
 							delete menfes[tujuan];
-						}, 600000)
+						}, 3600000)
 					};
-					naze.sendMessage(tujuan, { text: `_${command} connected_\n*Note :* jika ingin mengakhiri ketik _*${prefix}del${command}*_` });
-					m.reply(`_Memulai ${command}..._\n*Silahkan Mulai kirim pesan/media*\n*Durasi ${command} hanya selama 10 menit*\n*Note :* jika ingin mengakhiri ketik _*${prefix}del${command}*_`)
+					naze.sendMessage(tujuan, { text: `💬Hallo, kamu sekarang sedang menerima pesan menfess dari seseorang >_<\nSabar ya, tunggu sebentar sampai pesan menfess-nya masuk🚀\n\n~ _Faz Bot - WhatsApp Bot_\n\nMau bales menfess? ketik aja apa yang ingin di bales, tar otomatis dikirim kok\n*Note :* jika ingin mengakhiri ketik _*${prefix}del${command}*_` });
+					m.reply(`_Memulai ${command}..._\n*Silahkan Mulai kirim pesan/media*\n*Durasi ${command} berlangsung selama 1 jam*\n*Note :* jika ingin mengakhiri ketik _*${prefix}del${command}*_`)
 				} else {
 					m.reply(`Masukkan Nomernya!\nExample : ${prefix + command} 62xxxx|Nama Samaran`)
 				}
-			}
+		}
+ break
+case "ssweb": {
+    let link = text; // Simpan link yang dikirim ke dalam variabel 'link'
+    if (!link) return reply(`Contoh ${prefix + command} link`);
+    if (!/^https?:\/\//.test(link)) return reply('Awali *URL* dengan http:// atau https://');
+    if (!isPrem && global.db.data.users[sender].limit < 1) return reply('Maaf Kak Limit Anda Habis Ingin Membeli Limit Ketik .buylimit')
+             db.data.users[sender].limit -= 1 // -1 limit
+                reply('1 Limit Anda Terpakai')
+
+    let msg = generateWAMessageFromContent(from, {
+        viewOnceMessage: {
+            message: {
+                "messageContextInfo": {
+                    "deviceListMetadata": {},
+                    "deviceListMetadataVersion": 2
+                },
+                interactiveMessage: proto.Message.InteractiveMessage.create({
+                    body: proto.Message.InteractiveMessage.Body.create({
+                        text: 'Silahkan pilih *option* di bawah ini'
+                    }),
+                    footer: proto.Message.InteractiveMessage.Footer.create({
+                        text: wm
+                    }),
+                    header: proto.Message.InteractiveMessage.Header.create({
+                        title: ``,
+                        gifPlayback: true,
+                        subtitle: ownername,
+                        hasMediaAttachment: false
+                    }),
+                    nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+                        buttons: [
+                            {
+                                "name": "quick_reply",
+                                "buttonParamsJson": `{"display_text":"Desktop","id":"${prefix}sswebdesktop ${link}"}`
+                            },
+                            {
+                                "name": "quick_reply",
+                                "buttonParamsJson": `{"display_text":"Tablet","id":"${prefix}sswebtablet ${link}"}`
+                            },
+                            {
+                                "name": "quick_reply",
+                                "buttonParamsJson": `{"display_text":"Phone","id":"${prefix}sswebphone ${link}"}`
+                            }
+                        ],
+                    }),
+                    contextInfo: {
+                        mentionedJid: [m.sender],
+                        forwardingScore: 999,
+                        isForwarded: true,
+                        forwardedNewsletterMessageInfo: {
+                                newsletterName: saluran,
+                                newsletterJid: idsal,
+                            serverMessageId: 143
+                        }
+                    }
+                })
+            }
+        }
+    }, {});
+
+    await Inziehosting.relayMessage(msg.key.remoteJid, msg.message, {
+        messageId: msg.key.id
+    });
+}
 			break
 			case 'delconfes': case 'delconfess': case 'delmenfes': case 'delmenfess': {
 				if (!menfes[m.sender]) return m.reply(`Kamu Tidak Sedang Berada Di Sesi ${command.split('del')[1]}!`)
@@ -1348,7 +1430,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 				m.reply(mess.wait)
 				let media = await quoted.download()
 				let audio = await toAudio(media, 'mp4')
-				await naze.sendMessage(m.chat, { document: audio, mimetype: 'audio/mpeg', fileName: `Convert By Naze Bot.mp3`}, { quoted : m })
+				await naze.sendMessage(m.chat, { document: audio, mimetype: 'audio/mpeg', fileName: `Convert By Fazbot-wabot.mp3`}, { quoted : m })
 			}
 			break
 			case 'tovn': case 'toptt': case 'tovoice': {
@@ -1438,6 +1520,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			}
 			break
 			case 'toqr': case 'qr': {
+			    if (!isPremium) return m.reply(mess.prem)
 				if (!text) return m.reply(`Ubah Text ke Qr dengan *${prefix + command}* textnya`)
 				m.reply(mess.wait)
 				await naze.sendMessage(m.chat, { image: { url: 'https://api.qrserver.com/v1/create-qr-code/?size=1000x1000&data=' + text }, caption: 'Nih Bro' }, { quoted: m })
@@ -1591,6 +1674,52 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 				}
 			}
 			break
+			case 'sewa': case 'sewabot': {
+    await naze.sendMessage(m.chat, {
+        text: `*List Sewa Fazbot-wabot*\n
+  • Permanen: *20K*
+  • 4 Hari: *3K*
+  • 7 Hari: *5K*
+  • 10 Hari: *7K*
+  • 14 Hari: *10K*
+  • 16 Hari: *13K*
+  • 1 Bulan: *16K*
+  
+Jika Anda ingin menyewa Fazbot, silakan hubungi🙇‍♂️:
+📱 https://wa.me/6285876902820`,
+        contextInfo: {
+            externalAdReply: {
+                title: "Fazbot-Wabot",
+                body: "Klik untuk menyewa Fazbot",
+                mediaType: 2, // 2 untuk tautan
+                thumbnailUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhyWYx5_IFWOx3de2MtnBrwxK_r1gcNhwa6w&s", // Ubah ke URL thumbnail yang sesuai
+                mediaUrl: "https://wa.me/6285876902820?text=Bro%20mau%20sewa%20botnya", // URL untuk diakses
+            }
+        }
+    }, { quoted: m });
+}
+break
+
+case 'premium': case 'prem': {
+    await naze.sendMessage(m.chat, {
+        text: `*List Harga Premium Fazbot*\n
+  • 1 Bulan: *10K*
+  • 2 Bulan: *15K*
+  • 10000 Hari: *20K*\n
+Silakan hubungi owner untuk aktivasi premium:
+📱 https://wa.me/6285876902820`,
+        contextInfo: {
+            externalAdReply: {
+                title: "Fazbot Premium",
+                body: "Klik untuk aktivasi premium",
+                mediaType: 2, // 2 untuk tautan
+                thumbnailUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhyWYx5_IFWOx3de2MtnBrwxK_r1gcNhwa6w&s", // Ubah dengan tautan gambar thumbnail yang relevan
+                mediaUrl: "https://wa.me/6285876902820", // Tautan ke WhatsApp
+            }
+        }
+    }, { quoted: m });
+}
+break
 			case 'nulis': {
 				m.reply(`*Example*\n${prefix}nuliskiri\n${prefix}nuliskanan\n${prefix}foliokiri\n${prefix}foliokanan`)
 			}
@@ -1647,6 +1776,36 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 				})
 			}
 			break
+			case 'reminder': case 'pengingat': {
+	if (m.isGroup) return m.reply(mess.private)
+    if (!args[0] || !args[1]) return m.reply(`Contoh penggunaan:\n*${prefix + command} 10 menit belajar*\n*${prefix + command} 3 jam makan*\n*${prefix + command} 2 hari olahraga*`);
+
+    let time = parseInt(args[0]);
+    if (isNaN(time)) return m.reply(`Masukkan angka yang valid untuk waktu!\nContoh: *${prefix + command} 10 menit belajar*`);
+
+    let unit = args[1].toLowerCase();
+    let validUnits = ['menit', 'jam', 'hari'];
+    if (!validUnits.includes(unit)) return m.reply(`Gunakan salah satu unit waktu berikut: menit, jam, hari.\nContoh: *${prefix + command} 10 menit belajar*`);
+
+    let multiplier;
+    if (unit === 'menit') multiplier = 60000; // 1 menit = 60.000 ms
+    else if (unit === 'jam') multiplier = 3600000; // 1 jam = 3.600.000 ms
+    else if (unit === 'hari') multiplier = 86400000; // 1 hari = 86.400.000 ms
+
+    let delay = time * multiplier;
+    let message = args.slice(2).join(' ');
+    if (!message) return m.reply(`Tambahkan pesan pengingat Anda!\nContoh: *${prefix + command} 10 menit belajar*`);
+
+    m.reply(`Pengingat telah diatur selama ${time} ${unit}.\nPesan: "${message}"`);
+
+    setTimeout(() => {
+        naze.sendMessage(m.chat, {
+            text: `⏰ *Pengingat:*\n${message}\n\n(Dibuat ${time} ${unit} yang lalu)`,
+            mentions: [m.sender],
+        });
+    }, delay);
+}
+break
 			case 'foliokiri': {
 				if (!text) return m.reply(`Kirim perintah *${prefix + command}* Teksnya`)
 				m.reply(mess.wait)
@@ -2084,6 +2243,26 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 				}
 			}
 			break
+			case 'ranking': {
+    if (!m.isGroup) return m.reply('Fitur ini hanya tersedia di grup!');
+
+    // Baca file database aktivitas
+    const activity = JSON.parse(fs.readFileSync(activityFile, 'utf8'));
+    let groupActivity = activity[m.chat] || {};
+
+    if (Object.keys(groupActivity).length === 0) {
+        return m.reply('Belum ada aktivitas tercatat di grup ini.');
+    }
+
+    // Urutkan aktivitas berdasarkan jumlah pesan
+    let ranking = Object.entries(groupActivity)
+        .sort((a, b) => b[1] - a[1])
+        .map(([id, count], i) => `${i + 1}. @${id.split('@')[0]} - ${count} pesan`);
+
+    let message = `📊 *Peringkat Aktivitas Grup* 📊\n\n${ranking.join('\n')}`;
+    naze.sendMessage(m.chat, { text: message, mentions: Object.keys(groupActivity) });
+}
+break
 			case 'mediafire': {
 				if (!text) return m.reply(`Example: ${prefix + command} https://www.mediafire.com/file/xxxxxxxxx/xxxxx.zip/file`)
 				if (!isUrl(args[0]) && !args[0].includes('mediafire.com')) return m.reply('Url Invalid!')
@@ -2164,6 +2343,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			// Anime Menu
 			case 'waifu': {
 				try {
+				    if (!isPremium) return m.reply(mess.prem)
 					if (text == 'nsfw') {
 						const res = await fetchJson('https://api.waifu.pics/nsfw/waifu')
 						await naze.sendFileUrl(m.chat, res.url, 'Random Waifu', m)
@@ -2355,6 +2535,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			break
 			case 'akinator': {
 				if (text == 'start') {
+				    if (m.isGroup) return m.reply(mess.private)
 					if (akinator[m.sender]) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
 					akinator[m.sender] = new Akinator({ region: 'id', childMode: false });
 					await akinator[m.sender].start()
@@ -2403,6 +2584,42 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 				}
 			}
 			break
+			case 'kalori': case 'cekkalori': {
+    if (args.length < 4) return m.reply(`Cara penggunaan:\n*${prefix + command} [berat] [tinggi] [usia] [aktivitas]*\n\nAktivitas:\n- rendah\n- sedang\n- tinggi\n\nContoh: *${prefix + command} 70 175 25 sedang*`);
+    
+    let berat = parseFloat(args[0]);
+    let tinggi = parseFloat(args[1]);
+    let usia = parseInt(args[2]);
+    let aktivitas = args[3].toLowerCase();
+    let jenisKelamin = args[4]?.toLowerCase() || "pria"; // Default pria jika tidak disebutkan
+
+    if (isNaN(berat) || isNaN(tinggi) || isNaN(usia)) return m.reply(`Pastikan berat, tinggi, dan usia adalah angka yang valid!`);
+    
+    if (!["rendah", "sedang", "tinggi"].includes(aktivitas)) {
+        return m.reply(`Tingkat aktivitas harus salah satu dari: rendah, sedang, tinggi.`);
+    }
+
+    // Rumus BMR berdasarkan jenis kelamin
+    let bmr;
+    if (jenisKelamin === "pria") {
+        bmr = 10 * berat + 6.25 * tinggi - 5 * usia + 5; // Rumus untuk pria
+    } else if (jenisKelamin === "wanita") {
+        bmr = 10 * berat + 6.25 * tinggi - 5 * usia - 161; // Rumus untuk wanita
+    } else {
+        return m.reply(`Jenis kelamin harus "pria" atau "wanita".`);
+    }
+
+    // Faktor aktivitas
+    let faktorAktivitas;
+    if (aktivitas === "rendah") faktorAktivitas = 1.2;
+    if (aktivitas === "sedang") faktorAktivitas = 1.55;
+    if (aktivitas === "tinggi") faktorAktivitas = 1.9;
+
+    let totalKalori = Math.round(bmr * faktorAktivitas);
+
+    m.reply(`💡 *Hasil Perhitungan Kalori*\n\n📊 Berat: ${berat} kg\n📏 Tinggi: ${tinggi} cm\n🎂 Usia: ${usia} tahun\n⚡ Aktivitas: ${aktivitas}\n👤 Jenis Kelamin: ${jenisKelamin}\n\n🔥 *Kebutuhan Kalori Harian*: ${totalKalori} kalori.`);
+}
+break
 			case 'tebaklirik': {
 				if (iGame(tebaklirik, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebaklirik.json'));
@@ -2589,6 +2806,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 ├ *Tanggal* : ${tanggal}
 ├ *Hari* : ${hari}
 ├ *Jam* : ${jam} WIB
+├  *Ⓟ*   : Fitur premium
 ╰──────❍
 ╭──❍「 *BOT* 」❍
 │${setv} ${prefix}profile
@@ -2597,21 +2815,24 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 │${setv} ${prefix}transfer
 │${setv} ${prefix}leaderboard
 │${setv} ${prefix}request (text)
+│${setv} ${prefix}lapor (text)
 │${setv} ${prefix}react (emoji)
 │${setv} ${prefix}tagme
 │${setv} ${prefix}runtime
 │${setv} ${prefix}totalfitur
 │${setv} ${prefix}ping
 │${setv} ${prefix}afk
-│${setv} ${prefix}rvo (reply pesan viewone)
+│${setv} ${prefix}rvo (reply pesan satu kali lihat)
 │${setv} ${prefix}inspect (url gc)
 │${setv} ${prefix}addmsg
-│${setv} ${prefix}delmsg
+│${setv} ${prefix}delmsg Ⓟ
 │${setv} ${prefix}getmsg
 │${setv} ${prefix}listmsg
 │${setv} ${prefix}q (reply pesan)
 │${setv} ${prefix}menfes (62xxx|fake name)
 │${setv} ${prefix}donasi
+│${setv} ${prefix}premium
+│${setv} ${prefix}sewa
 ╰─┬────❍
 ╭─┴❍「 *GROUP* 」❍
 │${setv} ${prefix}add (62xxx)
@@ -2658,6 +2879,8 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 ╰─┬────❍
 ╭─┴❍「 *TOOLS* 」❍
 │${setv} ${prefix}get (url)
+│${setv} ${prefix}pengingat (waktu) (text) 
+│${setv} ${prefix}kalori (cek kebutuhan kalori harianmu) 
 │${setv} ${prefix}hd (reply pesan)
 │${setv} ${prefix}toaudio (reply pesan)
 │${setv} ${prefix}tomp3 (reply pesan)
@@ -2666,11 +2889,11 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 │${setv} ${prefix}toptv (reply pesan)
 │${setv} ${prefix}tourl (reply pesan)
 │${setv} ${prefix}tts (textnya)
-│${setv} ${prefix}toqr (textnya)
+│${setv} ${prefix}toqr (textnya) Ⓟ
 │${setv} ${prefix}ssweb (url)
 │${setv} ${prefix}sticker (send/reply img)
 │${setv} ${prefix}colong (reply stiker)
-│${setv} ${prefix}smeme (send/reply img)
+│${setv} ${prefix}smeme (send/reply img) Ⓟ
 │${setv} ${prefix}emojimix 🙃+💀
 │${setv} ${prefix}nulis
 │${setv} ${prefix}readmore text1|text2
@@ -2697,10 +2920,9 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 ╭─┴❍「 *AI* 」❍
 │${setv} ${prefix}ai (query)
 │${setv} ${prefix}simi (query)
-│${setv} ${prefix}txt2img (query)
 ╰─┬────❍
 ╭─┴❍「 *ANIME* 」❍
-│${setv} ${prefix}waifu
+│${setv} ${prefix}waifu Ⓟ
 │${setv} ${prefix}neko
 ╰─┬────❍
 ╭─┴❍「 *GAME* 」❍
@@ -2735,7 +2957,7 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 │${setv} ${prefix}rate (reply pesan)
 │${setv} ${prefix}jodohku
 │${setv} ${prefix}jadian
-│${setv} ${prefix}fitnah
+│${setv} ${prefix}fitnah Ⓟ
 │${setv} ${prefix}halah (text)
 │${setv} ${prefix}hilih (text)
 │${setv} ${prefix}huluh (text)
@@ -2749,14 +2971,14 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 │${setv} ${prefix}bot [set]
 │${setv} ${prefix}setbio
 │${setv} ${prefix}setppbot
-│${setv} ${prefix}join
+│${setv} ${prefix}join Ⓟ
 │${setv} ${prefix}leave
 │${setv} ${prefix}block
 │${setv} ${prefix}listblock
 │${setv} ${prefix}openblock
 │${setv} ${prefix}listpc
 │${setv} ${prefix}listgc
-│${setv} ${prefix}creategc
+│${setv} ${prefix}creategc Ⓟ
 │${setv} ${prefix}addprem
 │${setv} ${prefix}delprem
 │${setv} ${prefix}listprem
