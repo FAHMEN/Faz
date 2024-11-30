@@ -7,7 +7,7 @@ let DataBase;
 
 if (/mongo/.test(global.tempatDB)) {
 	DataBase = class mongoDB {
-		constructor(url, options = { useNewUrlParser: true, useUnifiedTopology: true }) {
+		constructor(url = global.tempatDB, options = { useNewUrlParser: true, useUnifiedTopology: true }) {
 			this.url = url
 			this.data = {}
 			this._model = {}
