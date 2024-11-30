@@ -2834,7 +2834,7 @@ break
 ├ *Mode* : ${naze.public ? 'Public' : 'Self'}
 ├ *Prefix* :${db.set[botNumber].multiprefix ? '「 MULTI-PREFIX 」' : ' *'+prefix+'*' }
 ╰─┬────❍
-╭─┴─❍「 *ABOUT* 」❍
+╭─┴─❍「 *TENTANG* 」❍
 ├ *Tanggal* : ${tanggal}
 ├ *Hari* : ${hari}
 ├ *Jam* : ${jam} WIB
@@ -2853,6 +2853,7 @@ break
 │${setv} ${prefix}runtime
 │${setv} ${prefix}totalfitur
 │${setv} ${prefix}ping
+│${setv} ${prefix}privacy
 │${setv} ${prefix}afk
 │${setv} ${prefix}rvo (reply pesan satu kali lihat)
 │${setv} ${prefix}inspect (url gc)
@@ -2883,7 +2884,7 @@ break
 │${setv} ${prefix}listonline
 │${setv} ${prefix}group set
 ╰─┬────❍
-╭─┴❍「 *SEARCH* 」❍
+╭─┴❍「 *CARI* 」❍
 │${setv} ${prefix}ytsearch (query)
 │${setv} ${prefix}pixiv (query)
 │${setv} ${prefix}pinterest (query)
@@ -2909,7 +2910,7 @@ break
 │${setv} ${prefix}truth
 │${setv} ${prefix}renungan
 ╰─┬────❍
-╭─┴❍「 *TOOLS* 」❍
+╭─┴❍「 *ALAT* 」❍
 │${setv} ${prefix}get (url)
 │${setv} ${prefix}pengingat (waktu) (text) 
 │${setv} ${prefix}kalori (cek kebutuhan kalori harianmu) 
@@ -2983,9 +2984,9 @@ break
 │${setv} ${prefix}apakah (text)
 │${setv} ${prefix}kapan (text)
 │${setv} ${prefix}kerangajaib (text)
-│${setv} ${prefix}cekmati (nama lu)
+│${setv} ${prefix}cekmati (nama)
 │${setv} ${prefix}ceksifat
-│${setv} ${prefix}cekkhodam (nama lu)
+│${setv} ${prefix}cekkhodam (nama)
 │${setv} ${prefix}rate (reply pesan)
 │${setv} ${prefix}jodohku
 │${setv} ${prefix}jadian
