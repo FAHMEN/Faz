@@ -1699,7 +1699,39 @@ Jika Anda ingin menyewa Fazbot, silakan hubungi🙇‍♂️:
     }, { quoted: m });
 }
 break
+case 'privacy': {
+    await naze.sendMessage(m.chat, {
+        text: `*Faz Bot - WhatsApp Bot*\n
+ Selamat datang di **Faz Bot**! Kami di sini untuk memberikan pelayanan terbaik melalui WhatsApp. Berikut adalah beberapa hal yang perlu Anda ketahui tentang Faz Bot:
 
+🔒 **Privasi Terjaga**  
+Kami sangat menghargai privasi Anda. Semua data yang Anda kirimkan melalui Faz Bot akan dijaga kerahasiaannya dan tidak akan dibagikan ke pihak ketiga.
+
+🔐 **Keamanan Terjamin**  
+Faz Bot menggunakan sistem enkripsi untuk melindungi semua percakapan Anda. Anda dapat merasa aman dalam berinteraksi dengan bot ini.
+
+⚡ **Layanan Cepat dan Responsif**  
+Faz Bot siap membantu Anda dengan berbagai informasi dan layanan secara cepat dan efisien.
+
+💬 **Tidak Ada Penyalahgunaan Data**  
+Faz Bot hanya menggunakan data yang diperlukan untuk memberikan layanan yang Anda minta. Kami tidak mengumpulkan data pribadi Anda untuk tujuan lain.
+
+Terima kasih telah menggunakan *Faz Bot*🤖. Kami siap membantu anda kapan saja!
+  
+Jika ada hal yang ingin ditanyakan, silakan hubungi🙇‍♂️:
+📱 https://wa.me/6285876902820`,
+        contextInfo: {
+            externalAdReply: {
+                title: "Fazbot-Wabot",
+                body: "Privacy Fazbot",
+                mediaType: 2, // 2 untuk tautan
+                thumbnailUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhyWYx5_IFWOx3de2MtnBrwxK_r1gcNhwa6w&s", // Ubah ke URL thumbnail yang sesuai
+                mediaUrl: "https://relaxmusic.rf.gd", // URL untuk diakses
+            }
+        }
+    }, { quoted: m });
+}
+break
 case 'premium': case 'prem': {
     await naze.sendMessage(m.chat, {
         text: `*List Harga Premium Fazbot*\n
