@@ -2202,6 +2202,113 @@ break
 				}
 			}
 			break
+			case 'cekmenarik': {
+    if (args.length < 5) {
+        return m.reply(`Cara penggunaan:\n*${prefix + command} [berat] [tinggi] [usia] [jenis kelamin] [warna kulit] [pendapatan (wajib untuk usia 18+)]*\n\nJenis Kelamin:\n- pria\n- wanita\n\nWarna Kulit:\n- putih\n- coklat\n- hitam\n\n📊 Tingkatan Menarik:\n- 🟥 Tidak Menarik: Skor <= 4\n- 🟧 Menarik: Skor 5-7\n- 🟩 Sangat Menarik: Skor >= 8\n\nContoh untuk usia di bawah 18: *${prefix + command} 50 160 16 pria putih*\nContoh untuk usia 18+: *${prefix + command} 70 175 25 pria putih 5000000*`);
+    }
+
+    let berat = parseFloat(args[0]);
+    let tinggi = parseFloat(args[1]);
+    let usia = parseInt(args[2]);
+    let jenisKelamin = args[3]?.toLowerCase();
+    let warnaKulit = args[4]?.toLowerCase();
+    let pendapatan = usia >= 18 ? parseInt(args[5]) : 0; // Pendapatan wajib untuk usia 18+
+
+    if (isNaN(berat) || isNaN(tinggi) || isNaN(usia)) return m.reply(`Pastikan berat, tinggi, dan usia adalah angka yang valid!`);
+
+    if (!["pria", "wanita"].includes(jenisKelamin)) {
+        return m.reply(`Jenis kelamin harus salah satu dari: pria, wanita.`);
+    }
+
+    if (!["putih", "coklat", "hitam"].includes(warnaKulit)) {
+        return m.reply(`Warna kulit harus salah satu dari: putih, coklat, hitam.`);
+    }
+
+    if (usia >= 18 && (!args[5] || isNaN(pendapatan))) {
+        return m.reply(`Pendapatan wajib diisi untuk usia 18 tahun atau lebih dan harus berupa angka yang valid!`);
+    }
+
+    if (usia < 11) {
+        return m.reply(`👶 Kamu masih bayi, jangan ya dekk!`);
+    }
+
+    // Penilaian tinggi badan
+    let score = 0;
+    let tinggiIdealPria = usia < 18 ? 160 : 170;
+    let tinggiIdealWanita = usia < 18 ? 150 : 160;
+
+    if (jenisKelamin === "pria") {
+        if (tinggi >= tinggiIdealPria + 5) {
+            score += 4; // Sangat menarik
+        } else if (tinggi >= tinggiIdealPria) {
+            score += 3; // Menarik
+        } else if (tinggi >= tinggiIdealPria - 5) {
+            score += 1; // Sedikit di bawah rata-rata
+        } else {
+            score -= 3; // Jauh di bawah rata-rata
+        }
+    } else if (jenisKelamin === "wanita") {
+        if (tinggi >= tinggiIdealWanita) {
+            score += 3; // Tinggi menarik
+        } else if (tinggi >= tinggiIdealWanita - 5) {
+            score += 1; // Masih menarik
+        } else {
+            score -= 2; // Di bawah rata-rata
+        }
+    }
+
+    // Penilaian berat badan
+    if (jenisKelamin === "pria") {
+        if (berat < 50) score -= 2; // Berat terlalu rendah
+    } else if (jenisKelamin === "wanita") {
+        let beratIdealMin = 0.9 * (tinggi - 100);
+        let beratIdealMax = 1.1 * (tinggi - 100);
+        if (berat < beratIdealMin) score -= 2; // Terlalu kurus
+        else if (berat > beratIdealMax) score -= 1; // Terlalu gemuk
+        else score += 2; // Berat ideal
+    }
+
+    // Penilaian warna kulit
+    if (warnaKulit === "putih") {
+        score += 2;
+    } else if (warnaKulit === "coklat") {
+        score += 1;
+    } else if (warnaKulit === "hitam") {
+        score -= 1;
+    }
+
+    // Penilaian pendapatan (untuk usia 18+)
+    if (usia >= 18) {
+        if (pendapatan === 0) {
+            score -= 3; // Pendapatan 0 mengurangi nilai besar
+        } else if (pendapatan >= 10000000) {
+            score += 3; // Pendapatan tinggi
+        } else if (pendapatan >= 5000000) {
+            score += 2; // Pendapatan menengah
+        } else if (pendapatan >= 2000000) {
+            score += 1; // Pendapatan rendah tapi masih memadai
+        } else {
+            score -= 1; // Pendapatan sangat rendah
+        }
+    }
+
+    // Peringkat akhir
+    let rating;
+    let pesan;
+    if (score <= 4) {
+        rating = "🟥 Tidak Menarik";
+        pesan = "Jangan berkecil hati! Selalu ada ruang untuk berkembang dan meningkatkan diri!";
+    } else if (score <= 7) {
+        rating = "🟧 Menarik";
+        pesan = "Kamu sudah cukup menarik! Teruslah menjaga diri dan kepercayaan dirimu.";
+    } else {
+        rating = "🟩 Sangat Menarik";
+        pesan = "Selamat! Kamu sangat menarik! Jangan lupa untuk tetap rendah hati dan ramah kepada orang lain.";
+    }
+
+    m.reply(`💡 *Hasil Penilaian Menarik*\n\n📊 Berat: ${berat} kg\n📏 Tinggi: ${tinggi} cm (Rata-rata: ${jenisKelamin === "pria" ? tinggiIdealPria : tinggiIdealWanita} cm)\n🎂 Usia: ${usia} tahun\n👤 Jenis Kelamin: ${jenisKelamin}\n🎨 Warna Kulit: ${warnaKulit}${usia >= 18 ? `\n💰 Pendapatan: Rp${pendapatan.toLocaleString()}` : ""}\n\n🧮 Skor: ${score}\n🔰 Peringkat: ${rating}\n\n✨ ${pesan}`);
+}
+break
 			case 'igstory': case 'instagramstory': case 'instastory': case 'storyig': {
 				if (!text) return m.reply(`Example: ${prefix + command} usernamenya`)
 				try {
@@ -2617,13 +2724,13 @@ break
 			}
 			break
 			case 'kalori': case 'cekkalori': {
-    if (args.length < 4) return m.reply(`Cara penggunaan:\n*${prefix + command} [berat] [tinggi] [usia] [aktivitas]*\n\nAktivitas:\n- rendah\n- sedang\n- tinggi\n\nContoh: *${prefix + command} 70 175 25 sedang*`);
+    if (args.length < 5) return m.reply(`Cara penggunaan:\n*${prefix + command} [berat] [tinggi] [usia] [aktivitas] [jenis kelamin]*\n\nAktivitas:\n- rendah\n- sedang\n- tinggi\n\nJenis Kelamin:\n- pria\n- wanita\n\nContoh: *${prefix + command} 70 175 25 sedang pria*`);
     
     let berat = parseFloat(args[0]);
     let tinggi = parseFloat(args[1]);
     let usia = parseInt(args[2]);
     let aktivitas = args[3].toLowerCase();
-    let jenisKelamin = args[4]?.toLowerCase() || "pria"; // Default pria jika tidak disebutkan
+    let jenisKelamin = args[4]?.toLowerCase();
 
     if (isNaN(berat) || isNaN(tinggi) || isNaN(usia)) return m.reply(`Pastikan berat, tinggi, dan usia adalah angka yang valid!`);
     
@@ -2631,14 +2738,16 @@ break
         return m.reply(`Tingkat aktivitas harus salah satu dari: rendah, sedang, tinggi.`);
     }
 
+    if (!["pria", "wanita"].includes(jenisKelamin)) {
+        return m.reply(`Jenis kelamin harus salah satu dari: pria, wanita.`);
+    }
+
     // Rumus BMR berdasarkan jenis kelamin
     let bmr;
     if (jenisKelamin === "pria") {
         bmr = 10 * berat + 6.25 * tinggi - 5 * usia + 5; // Rumus untuk pria
-    } else if (jenisKelamin === "wanita") {
-        bmr = 10 * berat + 6.25 * tinggi - 5 * usia - 161; // Rumus untuk wanita
     } else {
-        return m.reply(`Jenis kelamin harus "pria" atau "wanita".`);
+        bmr = 10 * berat + 6.25 * tinggi - 5 * usia - 161; // Rumus untuk wanita
     }
 
     // Faktor aktivitas
@@ -2651,7 +2760,7 @@ break
 
     m.reply(`💡 *Hasil Perhitungan Kalori*\n\n📊 Berat: ${berat} kg\n📏 Tinggi: ${tinggi} cm\n🎂 Usia: ${usia} tahun\n⚡ Aktivitas: ${aktivitas}\n👤 Jenis Kelamin: ${jenisKelamin}\n\n🔥 *Kebutuhan Kalori Harian*: ${totalKalori} kalori.`);
 }
-break
+break;
 			case 'tebaklirik': {
 				if (iGame(tebaklirik, m.chat)) return m.reply('Masih Ada Sesi Yang Belum Diselesaikan!')
 				const hasil = pickRandom(await fetchJson('https://raw.githubusercontent.com/nazedev/database/refs/heads/master/games/tebaklirik.json'));
@@ -2867,6 +2976,11 @@ break
 │${setv} ${prefix}premium
 │${setv} ${prefix}sewa
 ╰─┬────❍
+╭─┴❍「 *TAMBAHAN* 」❍
+│${setv} ${prefix}pengingat (waktu) (text) 
+│${setv} ${prefix}cekmenarik
+│${setv} ${prefix}kalori (kebutuhan kalori harianmu) 
+╰─┬────❍
 ╭─┴❍「 *GROUP* 」❍
 │${setv} ${prefix}add (62xxx)
 │${setv} ${prefix}kick (@tag/62xxx)
@@ -2912,8 +3026,6 @@ break
 ╰─┬────❍
 ╭─┴❍「 *ALAT* 」❍
 │${setv} ${prefix}get (url)
-│${setv} ${prefix}pengingat (waktu) (text) 
-│${setv} ${prefix}kalori (cek kebutuhan kalori harianmu) 
 │${setv} ${prefix}hd (reply pesan)
 │${setv} ${prefix}toaudio (reply pesan)
 │${setv} ${prefix}tomp3 (reply pesan)
