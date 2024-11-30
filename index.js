@@ -6,23 +6,21 @@ const axios = require('axios');
 const chalk = require('chalk');
 const readline = require('readline');
 const FileType = require('file-type');
+const { exec } = require('child_process');
 const { Boom } = require('@hapi/boom');
 const NodeCache = require('node-cache');
-const { exec, spawn, execSync } = require('child_process');
 const { parsePhoneNumber } = require('awesome-phonenumber');
-const { default: WAConnection, useMultiFileAuthState, Browsers, DisconnectReason, makeInMemoryStore, makeCacheableSignalKeyStore, fetchLatestBaileysVersion, proto, getAggregateVotesInPollMessage } = require('@whiskeysockets/baileys');
+const { default: WAConnection, useMultiFileAuthState, Browsers, DisconnectReason, makeInMemoryStore, makeCacheableSignalKeyStore, fetchLatestWaWebVersion, proto, PHONENUMBER_MCC, getAggregateVotesInPollMessage } = require('@whiskeysockets/baileys');
 
-const pairingCode = process.argv.includes('--qr') ? false : process.argv.includes('--pairing-code') || global.pairing_code;
+const pairingCode = global.pairing_code || process.argv.includes('--pairing-code');
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
 const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
 const question = (text) => new Promise((resolve) => rl.question(text, resolve))
 
-global.api = (name, path = '/', query = {}, apikeyqueryname) => (name in global.APIs ? global.APIs[name] : name) + path + (query || apikeyqueryname ? '?' + decodeURIComponent(new URLSearchParams(Object.entries({ ...query, ...(apikeyqueryname ? { [apikeyqueryname]: global.APIKeys[name in global.APIs ? global.APIs[name] : name] } : {}) }))) : '')
+global.api = (name, path = '/', query = {}, apikeyqueryname) => (name in global.APIs ? global.APIs[name] : name) + path + (query || apikeyqueryname ? '?' + new URLSearchParams(Object.entries({ ...query, ...(apikeyqueryname ? { [apikeyqueryname]: global.APIKeys[name in global.APIs ? global.APIs[name] : name] } : {}) })) : '')
 
 const DataBase = require('./src/database');
-const database = new DataBase(global.tempatDB);
-const msgRetryCounterCache = new NodeCache();
-
+const database = new DataBase();
 (async () => {
 	const loadData = await database.read()
 	if (loadData && Object.keys(loadData).length === 0) {
@@ -45,17 +43,18 @@ const msgRetryCounterCache = new NodeCache();
 })();
 
 const { GroupUpdate, GroupParticipantsUpdate, MessagesUpsert, Solving } = require('./src/message');
-const { isUrl, generateMessageTag, getBuffer, getSizeMedia, fetchJson, sleep } = require('./lib/function');
+const { isUrl, generateMessageTag, getBuffer, getSizeMedia, fetchJson, await, sleep } = require('./lib/function');
 
 /*
 	* Create By Naze
 	* Follow https://github.com/nazedev
-	* Whatsapp : https://whatsapp.com/channel/0029VaWOkNm7DAWtkvkJBK43
+	* Whatsapp : wa.me/6282113821188
 */
 
 async function startNazeBot() {
 	const { state, saveCreds } = await useMultiFileAuthState('nazedev');
-	const { version, isLatest } = await fetchLatestBaileysVersion();
+	const { version, isLatest } = await fetchLatestWaWebVersion();
+	const msgRetryCounterCache = new NodeCache();
 	const level = pino({ level: 'silent' })
 	
 	const getMessage = async (key) => {
@@ -64,35 +63,33 @@ async function startNazeBot() {
 			return msg?.message || ''
 		}
 		return {
-			conversation: 'Halo Saya Naze Bot'
+			conversation: 'Halo Saya Fazbot'
 		}
 	}
 	
 	const naze = WAConnection({
-		//version,
 		isLatest,
+		//version: [2, 3000, 1015901307],
 		logger: level,
+		printQRInTerminal: !pairingCode,
+		browser: Browsers.ubuntu('Chrome'),
+		auth: {
+			creds: state.creds,
+			keys: makeCacheableSignalKeyStore(state.keys, level),
+		},
+		transactionOpts: {
+			maxCommitRetries: 10,
+			delayBetweenTriesMs: 10,
+		},
 		getMessage,
 		syncFullHistory: true,
 		maxMsgRetryCount: 15,
 		msgRetryCounterCache,
 		retryRequestDelayMs: 10,
 		defaultQueryTimeoutMs: 0,
-		printQRInTerminal: !pairingCode,
-		browser: Browsers.ubuntu('Chrome'),
+		connectTimeoutMs: 60000,
+		keepAliveIntervalMs: 10000,
 		generateHighQualityLinkPreview: true,
-		transactionOpts: {
-			maxCommitRetries: 10,
-			delayBetweenTriesMs: 10,
-		},
-		appStateMacVerification: {
-			patch: true,
-			snapshot: true,
-		},
-		auth: {
-			creds: state.creds,
-			keys: makeCacheableSignalKeyStore(state.keys, level),
-		},
 	})
 	
 	if (pairingCode && !naze.authState.creds.registered) {
@@ -157,15 +154,6 @@ async function startNazeBot() {
 		}
 		if (connection == 'open') {
 			console.log('Connected to : ' + JSON.stringify(naze.user, null, 2));
-			let botNumber = await naze.decodeJid(naze.user.id);
-			if (db.set[botNumber] && !db.set[botNumber]?.join) {
-				if (global.my.gc.length > 0 && global.my.gc.includes('whatsapp.com')) {
-					await naze.groupAcceptInvite(global.my.gc?.split('https://chat.whatsapp.com/')[1]).then(async grupnya => {
-						await naze.chatModify({ archive: true }, grupnya, [])
-						db.set[botNumber].join = true
-					});
-				}
-			}
 		}
 		if (receivedPendingNotifications == 'true') {
 			console.log('Please wait About 1 Minute...')
