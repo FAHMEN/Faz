@@ -476,7 +476,38 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 		
 		switch(command) {
 			// Tempat Add Case
-			case '19rujxl1e': {
+			
+case 'ig': case 'instagram': case 'instadl': case 'igdown': case 'igdl': {
+				if (!text) return m.reply(`Example: ${prefix + command} url_instagram`)
+				if (!text.includes('instagram.com')) return m.reply('Url Tidak Mengandung Result Dari Instagram!')
+				m.reply(mess.wait)
+				try {
+					const hasil = await multiDownload(text);
+					if(hasil.length < 0) return m.reply('Postingan Tidak Tersedia atau Privat!')
+					for (let i = 0; i < hasil.length; i++) {
+						await naze.sendFileUrl(m.chat, hasil[i].path, 'Done', m)
+					}
+				} catch (e) {
+					try {
+						let hasil = await fetchJson(api('hitori','/download/instagram', { url: text }, 'apikey'))
+						if(hasil.result.length < 0) return m.reply('Postingan Tidak Tersedia atau Privat!')
+						for (let i = 0; i < hasil.result.length; i++) {
+							await naze.sendFileUrl(m.chat, hasil.result[i].imageUrl, 'Done, kalo eror manual aja ya 🗿\n\nhttps://id.savefrom.net/190/download-from-instagram', m)
+						}
+					} catch (e) {
+						m.reply('Postingan Tidak Tersedia atau Privat!')
+					}
+				}
+			}
+			break
+
+case 'wallpaperphone': case 'wallphone':
+let anu = await wallpaper(text)
+var notnot = JSON.parse(fs.readFileSync('./src/media/randompics/wallhp.json'))
+var hasil = pickRandom(notnot)
+await naze.sendMessage(m.chat, { caption: mess.success, image: { url: hasil.url } }, { quoted: m })
+break
+case '19rujxl1e': {
 				console.log('.')
 			}
 			break
@@ -818,7 +849,10 @@ module.exports = naze = async (naze, m, chatUpdate, store) => {
 			break
 			case 'sc': case 'script': {
 				await naze.sendMessage(m.chat, {
-					text: `https://wa.me/6285876902820\n⬆️ sc ada di harga 35k cuy`,
+					text: `✨ *Mau Script😊?*  
+Dapatkan script premium dengan harga hanya *Rp40.000*!  
+Klik link berikut untuk info lebih lanjut:  
+🌐 https://wa.me/6285876902820`,
 					contextInfo: {
 						forwardingScore: 10,
 						isForwarded: true,
@@ -1665,7 +1699,7 @@ case "ssweb": {
 						m.reply(mess.wait)
 						let media = await quoted.download()
 						let anu = await UguuSe(media)
-						await naze.sendMessage(m.chat, { document: { url: 'https://some-random-api.com/canvas/triggered?avatar=' + anu.url }, fileName: 'triggered.gif', mimetype: 'image/gif' }, { quoted: m })
+						await naze.sendMessage(m.chat, { document: { url: 'https://some-random-api.com/canvas/triggered?avatar=' + anu.url }, fileName: 'fazbot.gif', mimetype: 'image/gif' }, { quoted: m })
 					} else {
 						m.reply('Send Media yg ingin di Upload!')
 					}
@@ -1735,8 +1769,8 @@ break
 case 'premium': case 'prem': {
     await naze.sendMessage(m.chat, {
         text: `*List Harga Premium Fazbot*\n
-  • 1 Bulan: *10K*
-  • 2 Bulan: *15K*
+  • 1 Bulan: *5K*
+  • 2 Bulan: *10K*
   • 10000 Hari: *20K*\n
 Silakan hubungi owner untuk aktivasi premium:
 📱 https://wa.me/6285876902820`,
@@ -1946,6 +1980,7 @@ break
 			}
 			break
 			
+			
 			// Ai Menu
 			case 'ai': {
 				if (!text) return m.reply(`Example: ${prefix + command} query`)
@@ -2016,7 +2051,7 @@ break
 				try {
 					const res = await yts.search(text);
 					const hasil = pickRandom(res.all)
-					const teksnya = `*📍Title:* ${hasil.title || 'Tidak tersedia'}\n*✏Description:* ${hasil.description || 'Tidak tersedia'}\n*🌟Channel:* ${hasil.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${hasil.seconds || 'Tidak tersedia'} second (${hasil.timestamp || 'Tidak tersedia'})\n*🔎Source:* ${hasil.url || 'Tidak tersedia'}\n\n_note : jika ingin mendownload silahkan_\n_pilih ${prefix}ytmp3 url_video atau ${prefix}ytmp4 url_video_`;
+					const teksnya = `*📍Title:* ${hasil.title || 'Tidak tersedia'}\n*✏Description:* ${hasil.description || 'Tidak tersedia'}\n*🌟Channel:* ${hasil.author?.name || 'Tidak tersedia'}\n*⏳Duration:* ${hasil.seconds || 'Tidak tersedia'} second (${hasil.timestamp || 'Tidak tersedia'})\n*🔎Source:* ${hasil.url || 'Tidak tersedia'}\n\n_note : jika ingin mendownload lagu silahkan_\nketik ${prefix}ytmp3 url_video dan tunggu selama kurang lebih 3 menit☺`;
 					await naze.sendMessage(m.chat, { image: { url: hasil.thumbnail }, caption: teksnya }, { quoted: m });
 				} catch (e) {
 					m.reply('Post not available!')
@@ -2109,6 +2144,42 @@ break
 				}
 			}
 			break
+			case 'delcase': {
+if (!isCreator) return m.reply(mess.owner)
+if (!text) return m.reply('*Masukan nama case yang akan di hapus*')
+dellCase('./naze.js', q)
+reply('*Dellcase Successfully*')
+}
+break
+case 'addcase': {
+ if (!isCreator) return m.reply(mess.owner)
+if (!text) return m.reply('*mana casenya?*')
+    const fs = require('fs');
+const namaFile = 'naze.js';
+const caseBaru = `${text}`;
+fs.readFile(namaFile, 'utf8', (err, data) => {
+    if (err) {
+        console.error('Terjadi kesalahan saat membaca file:', err);
+        return;
+    }
+    const posisiAwalGimage = data.indexOf("case 'addcase':");
+
+    if (posisiAwalGimage !== -1) {
+        const kodeBaruLengkap = data.slice(0, posisiAwalGimage) + '\n' + caseBaru + '\n' + data.slice(posisiAwalGimage);
+        fs.writeFile(namaFile, kodeBaruLengkap, 'utf8', (err) => {
+            if (err) {
+                reply('Terjadi kesalahan saat menulis file:', err);
+            } else {
+                reply('Case baru berhasil ditambahkan.');
+            }
+        });
+    } else {
+        reply('Tidak dapat menambahkan case dalam file.');
+    }
+});
+
+}
+break
 			
 			// Downloader Menu
 			case 'ytmp3': case 'ytaudio': case 'ytplayaudio': {
@@ -2179,29 +2250,8 @@ break
 				}
 			}
 			break
-			case 'ig': case 'instagram': case 'instadl': case 'igdown': case 'igdl': {
-				if (!text) return m.reply(`Example: ${prefix + command} url_instagram`)
-				if (!text.includes('instagram.com')) return m.reply('Url Tidak Mengandung Result Dari Instagram!')
-				m.reply(mess.wait)
-				try {
-					const hasil = await multiDownload(text);
-					if(hasil.length < 0) return m.reply('Postingan Tidak Tersedia atau Privat!')
-					for (let i = 0; i < hasil.length; i++) {
-						await naze.sendFileUrl(m.chat, hasil[i].path, 'Done', m)
-					}
-				} catch (e) {
-					try {
-						let hasil = await fetchJson(api('hitori','/download/instagram', { url: text }, 'apikey'))
-						if(hasil.result.length < 0) return m.reply('Postingan Tidak Tersedia atau Privat!')
-						for (let i = 0; i < hasil.result.length; i++) {
-							await naze.sendFileUrl(m.chat, hasil.result[i].imageUrl, 'Done', m)
-						}
-					} catch (e) {
-						m.reply('Postingan Tidak Tersedia atau Privat!')
-					}
-				}
-			}
-			break
+			case 'ig': 
+			
 			case 'cekmenarik': {
     if (args.length < 5) {
         return m.reply(`Cara penggunaan:\n*${prefix + command} [berat] [tinggi] [usia] [jenis kelamin] [warna kulit] [pendapatan (wajib untuk usia 18+)]*\n\nJenis Kelamin:\n- pria\n- wanita\n\nWarna Kulit:\n- putih\n- coklat\n- hitam\n\n📊 Tingkatan Menarik:\n- 🟥 Tidak Menarik: Skor <= 4\n- 🟧 Menarik: Skor 5-7\n- 🟩 Sangat Menarik: Skor >= 8\n\nContoh untuk usia di bawah 18: *${prefix + command} 50 160 16 pria putih*\nContoh untuk usia 18+: *${prefix + command} 70 175 25 pria putih 5000000*`);
@@ -2232,24 +2282,25 @@ break
         return m.reply(`👶 Kamu masih bayi, jangan ya dekk!`);
     }
 
-    // Penilaian tinggi badan
+    // Penilaian awal
     let score = 0;
     let tinggiIdealPria = usia < 18 ? 160 : 170;
     let tinggiIdealWanita = usia < 18 ? 150 : 160;
 
+    // Penilaian tinggi badan (sangat berpengaruh untuk pria)
     if (jenisKelamin === "pria") {
         if (tinggi >= tinggiIdealPria + 5) {
-            score += 4; // Sangat menarik
+            score += 5; // Sangat menarik
         } else if (tinggi >= tinggiIdealPria) {
-            score += 3; // Menarik
+            score += 4; // Menarik
         } else if (tinggi >= tinggiIdealPria - 5) {
-            score += 1; // Sedikit di bawah rata-rata
+            score += 2; // Cukup
         } else {
-            score -= 3; // Jauh di bawah rata-rata
+            score -= 3; // Tidak menarik
         }
     } else if (jenisKelamin === "wanita") {
         if (tinggi >= tinggiIdealWanita) {
-            score += 3; // Tinggi menarik
+            score += 3; // Menarik
         } else if (tinggi >= tinggiIdealWanita - 5) {
             score += 1; // Masih menarik
         } else {
@@ -2257,18 +2308,22 @@ break
         }
     }
 
-    // Penilaian berat badan
-    if (jenisKelamin === "pria") {
+    // Penilaian berat badan (sangat berpengaruh untuk wanita)
+    let beratIdealMin = 0.9 * (tinggi - 100);
+    let beratIdealMax = 1.1 * (tinggi - 100);
+    if (jenisKelamin === "wanita") {
+        if (berat < beratIdealMin) {
+            score -= 3; // Terlalu kurus
+        } else if (berat > beratIdealMax) {
+            score -= 2; // Terlalu gemuk
+        } else {
+            score += 5; // Berat ideal
+        }
+    } else if (jenisKelamin === "pria") {
         if (berat < 50) score -= 2; // Berat terlalu rendah
-    } else if (jenisKelamin === "wanita") {
-        let beratIdealMin = 0.9 * (tinggi - 100);
-        let beratIdealMax = 1.1 * (tinggi - 100);
-        if (berat < beratIdealMin) score -= 2; // Terlalu kurus
-        else if (berat > beratIdealMax) score -= 1; // Terlalu gemuk
-        else score += 2; // Berat ideal
     }
 
-    // Penilaian warna kulit
+    // Penilaian warna kulit (berpengaruh untuk semua)
     if (warnaKulit === "putih") {
         score += 2;
     } else if (warnaKulit === "coklat") {
@@ -2277,18 +2332,22 @@ break
         score -= 1;
     }
 
-    // Penilaian pendapatan (untuk usia 18+)
+    // Penilaian pendapatan (sangat berpengaruh untuk pria usia 18+)
     if (usia >= 18) {
-        if (pendapatan === 0) {
-            score -= 3; // Pendapatan 0 mengurangi nilai besar
-        } else if (pendapatan >= 10000000) {
-            score += 3; // Pendapatan tinggi
-        } else if (pendapatan >= 5000000) {
-            score += 2; // Pendapatan menengah
-        } else if (pendapatan >= 2000000) {
-            score += 1; // Pendapatan rendah tapi masih memadai
-        } else {
-            score -= 1; // Pendapatan sangat rendah
+        if (jenisKelamin === "pria") {
+            if (pendapatan < 2000000) {
+                score -= 5; // Pendapatan sangat rendah
+            } else if (pendapatan >= 10000000) {
+                score += 5; // Pendapatan sangat tinggi
+            } else if (pendapatan >= 5000000) {
+                score += 3; // Pendapatan menengah
+            } else {
+                score += 1; // Pendapatan memadai
+            }
+        } else if (jenisKelamin === "wanita") {
+            if (pendapatan < 2000000) {
+                score -= 2; // Tidak terlalu berpengaruh untuk wanita
+            }
         }
     }
 
@@ -3012,7 +3071,6 @@ break;
 ╰─┬────❍
 ╭─┴❍「 *DOWNLOAD* 」❍
 │${setv} ${prefix}ytmp3 (url)
-│${setv} ${prefix}ytmp4 (url)
 │${setv} ${prefix}instagram (url)
 │${setv} ${prefix}tiktok (url)
 │${setv} ${prefix}facebook (url)
@@ -3111,6 +3169,7 @@ break;
 ╰─┬────❍
 ╭─┴❍「 *RANDOM* 」❍
 │${setv} ${prefix}coffe
+│${setv} ${prefix}wallphone
 ╰─┬────❍
 ╭─┴❍「 *OWNER* 」❍
 │${setv} ${prefix}bot [set]
@@ -3119,6 +3178,8 @@ break;
 │${setv} ${prefix}join Ⓟ
 │${setv} ${prefix}leave
 │${setv} ${prefix}block
+│${setv} ${prefix}addcase
+│${setv} ${prefix}delcase
 │${setv} ${prefix}listblock
 │${setv} ${prefix}openblock
 │${setv} ${prefix}listpc
@@ -3140,35 +3201,29 @@ break;
 │${setv} <
 ╰──────❍`
 				await naze.sendMessage(m.chat, {
-					document: fake.docs,
-					fileName: ucapanWaktu,
-					mimetype: pickRandom(fake.listfakedocs),
-					fileLength: '100000000000000',
-					pageCount: '999',
-					caption: menunya,
-					contextInfo: {
-						mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
-						forwardingScore: 10,
-						isForwarded: true,
-						forwardedNewsletterMessageInfo: {
-							newsletterJid: my.ch,
-							serverMessageId: null,
-							newsletterName: 'Join For More Info'
-						},
-						externalAdReply: {
-							title: author,
-							body: packname,
-							showAdAttribution: true,
-							thumbnailUrl: profile,
-							mediaType: 1,
-							previewType: 0,
-							renderLargerThumbnail: true,
-							mediaUrl: my.gh,
-							sourceUrl: my.gh,
-						}
-					}
-				}, { quoted: m })
-			}
+        document: Buffer.from(menunya, 'utf-8'), // Menggunakan buffer untuk mengirimkan dokumen
+        fileName: `${ucapanWaktu}.txt`, // Memberi nama file dengan waktu
+        fileLength: '1',
+        mimetype: 'text/plain', // Set mimetype sebagai plain text
+        caption: menunya,
+        contextInfo: {
+            mentionedJid: [m.sender, '0@s.whatsapp.net', owner[0] + '@s.whatsapp.net'],
+            forwardingScore: 10,
+            isForwarded: true,
+            externalAdReply: {
+                title: faz,
+                body: fazbot,
+                showAdAttribution: true,
+                thumbnailUrl: profile,
+                mediaType: 1,
+                previewType: 0,
+                renderLargerThumbnail: true,
+                mediaUrl: my.gh,
+                sourceUrl: my.gh,
+            }
+        }
+    }, { quoted: m });
+}
 			break
 
 			default:

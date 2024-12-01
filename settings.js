@@ -11,7 +11,9 @@ const chalk = require('chalk');
 
 global.owner = ['6285876902820']
 global.packname = 'Fazbot'
+global.fazbot = 'wa-bot'
 global.author = 'Fahril'
+global.faz = 'Fazbot'
 global.botname = 'Fazbot'
 global.listprefix = ['+','!']
 global.listv = ['•','●','■','✿','▲','➩','➢','➣','➤','✦','✧','△','❀','○','□','♤','♡','◇','♧','々','〆']
@@ -27,10 +29,10 @@ global.fake = {
 }
 
 global.my = {
-	yt: 'https://relaxmusic.rf.gd',
-	gh: 'https://relaxmusic.rf.gd',
-	gc: 'https://chat.whatsapp.com/Hx9vcBVhbc04KLG2R',
-	ch: '120369960161@newsletter',
+	yt: 'https://donatesuport.rf.gd/',
+	gh: 'https://donatesuport.rf.gd/',
+	gc: 'https://whatsapp.com/channel/0029Vaz7yJFHVvTYroi7o227',
+	ch: '0029Vaz7yJFHVvTYroi7o227@newsletter',
 }
 
 global.limit = {
