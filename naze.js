@@ -45,7 +45,7 @@ const { TelegraPh, UguuSe } = require('./lib/uploader');
 const { toAudio, toPTT, toVideo } = require('./lib/converter');
 const { imageToWebp, videoToWebp, writeExif } = require('./lib/exif');
 const { rdGame, iGame, tGame, gameSlot, gameCasinoSolo, gameMerampok, gameBegal, daily, buy, setLimit, addLimit, addUang, setUang, transfer } = require('./lib/game');
-const { pinterest, pinterest2, wallpaper, remini, wikimedia, quotesAnime, multiDownload, yanzGpt, happymod, umma, ringtone, jadwalsholat, styletext, tiktokDl, facebookDl, instaStory, bk9Ai, ytMp4, ytMp3, mediafireDl, quotedLyo, simi } = require('./lib/screaper');
+const { pinterest, pinterest2, wallpaper, remini, wikimedia, quotesAnime, multiDownload, Fazbot-Gpt, happymod, umma, ringtone, jadwalsholat, styletext, tiktokDl, facebookDl, instaStory, bk9Ai, ytMp4, ytMp3, mediafireDl, quotedLyo, simi } = require('./lib/screaper');
 const { unixTimestampSeconds, generateMessageTag, processTime, webApi, getRandom, getBuffer, fetchJson, runtime, clockString, sleep, isUrl, getTime, formatDate, tanggal, formatp, jsonformat, reSize, toHD, logic, generateProfilePicture, bytesToSize, checkBandwidth, getSizeMedia, parseMention, getGroupAdmins, readFileTxt, readFileJson, getHashedPassword, generateAuthToken, cekMenfes, generateToken, batasiTeks, randomText, isEmoji, getTypeUrlMedia, pickRandom, getAllHTML } = require('./lib/function');
 
 // Read Database
@@ -1008,6 +1008,7 @@ Klik link berikut untuk info lebih lanjut:
 			}
 			break
 			case 'delete': case 'del': case 'd': {
+			    if (!isPremium) return m.reply(mess.prem)
 				if (!m.quoted) return m.reply('Reply pesan yang mau di delete')
 				await naze.sendMessage(m.chat, { delete: { remoteJid: m.chat, fromMe: m.isBotAdmin ? false : true, id: m.quoted.id, participant: m.quoted.sender }})
 			}
@@ -1985,7 +1986,7 @@ break
 			case 'ai': {
 				if (!text) return m.reply(`Example: ${prefix + command} query`)
 				try {
-					let hasil = await yanzGpt(text)
+					let hasil = await Fazbot-Gpt(text)
 					m.reply(hasil.choices[0].message.content)
 				} catch (e) {
 					try {
@@ -2057,6 +2058,7 @@ break
 					m.reply('Post not available!')
 				}
 			}
+			break
 			break
 			case 'pixiv': {
 				if (!text) return m.reply(`Example: ${prefix + command} hu tao`)
@@ -3084,6 +3086,7 @@ break;
 ╰─┬────❍
 ╭─┴❍「 *ALAT* 」❍
 │${setv} ${prefix}get (url)
+│${setv} ${prefix}brat
 │${setv} ${prefix}hd (reply pesan)
 │${setv} ${prefix}toaudio (reply pesan)
 │${setv} ${prefix}tomp3 (reply pesan)
