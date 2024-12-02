@@ -910,7 +910,7 @@ Klik link berikut untuk  kontak owner:
 									await naze.sendMessage(m.chat, { text: `@${numbersOnly.split('@')[0]} Tidak Dapat Ditambahkan\n\nKarena Target Private\n\nUndangan Akan Dikirimkan Ke\n-> wa.me/${numbersOnly.replace(/\D/g, '')}\nMelalui Jalur Pribadi`, mentions: [numbersOnly] }, { quoted : m })
 									await naze.sendMessage(`${numbersOnly ? numbersOnly : '6285876902820@s.whatsapp.net'}`, { text: `${'https://chat.whatsapp.com/' + invv}\n------------------------------------------------------\n\nAdmin: @${m.sender.split('@')[0]}\nMengundang anda ke group ini\nSilahkan masuk jika berkehendak🙇`, detectLink: true, mentions: [numbersOnly, m.sender] }, { quoted : fkontak }).catch((err) => m.reply('Gagal Mengirim Undangan!'))
 								} else if (i.status !== 200) {
-									m.reply('Gagal Add User')
+									m.reply('Berhasil Add User')
 								}
 							}
 						})
@@ -1072,7 +1072,6 @@ Klik link berikut untuk  kontak owner:
 			case 'hidetag': case 'h': {
 				if (!m.isGroup) return m.reply(mess.group)
 				if (!m.isAdmin) return m.reply(mess.admin)
-				if (!m.isBotAdmin) return m.reply(mess.botAdmin)
 				naze.sendMessage(m.chat, { text : q ? q : '' , mentions: m.metadata.participants.map(a => a.id)}, { quoted: m })
 			}
 			break
@@ -1099,7 +1098,7 @@ Klik link berikut untuk  kontak owner:
 				await naze.sendContact(m.chat, owner, m);
 			}
 			break
-			case 'profile': case 'cek': {
+			case 'profile': case 'profil': {
 				const user = Object.keys(db.users)
 				const infoUser = db.users[m.sender]
 				await m.reply(`*👤Profile @${m.sender.split('@')[0]}* :\n🐋User Bot : ${user.includes(m.sender) ? 'True' : 'False'}\n🔥User : ${isVip ? 'VIP' : isPremium ? 'PREMIUM' : 'FREE'}\n🎫Limit : ${infoUser.limit}\n💰Uang : ${infoUser ? infoUser.uang.toLocaleString('id-ID') : '0'}`)
@@ -1157,6 +1156,7 @@ Klik link berikut untuk  kontak owner:
 				switch(teks[0]) {
 					case 'mode':
 					if (teks[1] == 'public') {
+					   if (!isCreator) return m.reply(mess.owner)
 						if (naze.public) return m.reply('*Sudah Aktif Sebelumnya*')
 						naze.public = set.public = true
 						m.reply('*Sukse Change To Public Usage*')
@@ -1168,6 +1168,7 @@ Klik link berikut untuk  kontak owner:
 					}
 					break
 					case 'anticall': case 'autobio': case 'autoread': case 'autotyping': case 'readsw': case 'multiprefix':
+					if (!isCreator) return m.reply(mess.owner)
 					if (teks[1] == 'on') {
 						if (set[teks[0]]) return m.reply('*Sudah Aktif Sebelumnya*')
 						set[teks[0]] = true
@@ -1180,6 +1181,7 @@ Klik link berikut untuk  kontak owner:
 					}
 					break
 					case 'set': case 'settings':
+					if (!isCreator) return m.reply(mess.owner)
 					let settingsBot = Object.entries(set).map(([key, value]) => {
 						let list = key == 'status' ? new Date(value).toLocaleString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : (typeof value === 'boolean') ? (value ? 'on🟢' : 'off🔴') : value;
 						return `- ${key.charAt(0).toUpperCase() + key.slice(1)} : ${list}`;
@@ -1601,12 +1603,13 @@ case "ssweb": {
   Dengan menjadi pengguna *Premium* _Fazbot_- WhatsApp Bot, kamu akan mendapatkan berbagai manfaat eksklusif seperti:\n
   • ✨ *Akses Semua Fitur Premium*: Semua fitur terbuka tanpa batasan.\n
   • 👥 *Bebas Memasukkan Bot ke Grup WhatsApp*: Tidak ada batasan jumlah grup.\n
-  "• 🗑️ *Hapus Pesan Bot yang Tidak Diinginkan*: Kamu bisa dengan mudah menghapus pesan yang sudah dikirim oleh bot, membuat obrolanmu tetap rapi dan nyaman!"\n
   • 💎 *Tambahan Limit Super Besar*: Mendapatkan *1000 limit* .\n
   • 💰 *Uang Bot Fantastis*: Langsung menerima sebanyak *1.000.000* FazCoin.\n
   • 🌟 *Pengalaman Premium Tanpa Gangguan*: Rasakan layanan terbaik tanpa hambatan.\n
   • 🎉 *Update Eksklusif*: Mendapatkan pembaruan fitur lebih baik.\n\n
-Jadilah bagian dari pengguna premium dan nikmati layanan yang lebih memuaskan. Hubungi owner untuk aktivasi premium:\n
+Jadilah bagian dari pengguna premium dan nikmati layanan yang lebih memuaskan.\n
+"• 🗑️ *Hapus Pesan Bot yang Tidak Diinginkan*: Kamu bisa dengan mudah menghapus pesan yang sudah dikirim oleh bot dengan mengetik ${prefix}del (reply pesan bot), sehingga membuat obrolanmu tetap rapi dan nyaman!"\n
+Hubungi owner untuk aktivasi premium:\n
 📱 https://wa.me/6285876902820`,
         contextInfo: {
             externalAdReply: {
@@ -1794,9 +1797,9 @@ break
 case 'premium': case 'prem': {
     await naze.sendMessage(m.chat, {
         text: `*List Harga Premium Fazbot*\n
-  • 1 Bulan: *15K*
-  • 2 Bulan: *25K*
-  • 10000 Hari: *30K*
+  • 2  Bulan: *15K*
+  • 3  Bulan: *25K*
+  • 12 Bulan: *30K*
   
   ℙℝ𝔼𝕄𝕀𝕌𝕄 𝕍𝕀ℙ
   • untuk manfaat fitur premium bisa ketik: ${prefix}manfaat\n\n
@@ -3082,7 +3085,7 @@ break;
 │${setv} ${prefix}linkgrup
 │${setv} ${prefix}revoke
 │${setv} ${prefix}tagall
-│${setv} ${prefix}hidetag
+│${setv} ${prefix}hidetag (text) 
 │${setv} ${prefix}totag (reply pesan)
 │${setv} ${prefix}listonline
 │${setv} ${prefix}group set
