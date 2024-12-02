@@ -45,7 +45,7 @@ const { TelegraPh, UguuSe } = require('./lib/uploader');
 const { toAudio, toPTT, toVideo } = require('./lib/converter');
 const { imageToWebp, videoToWebp, writeExif } = require('./lib/exif');
 const { rdGame, iGame, tGame, gameSlot, gameCasinoSolo, gameMerampok, gameBegal, daily, buy, setLimit, addLimit, addUang, setUang, transfer } = require('./lib/game');
-const { pinterest, pinterest2, wallpaper, remini, wikimedia, quotesAnime, multiDownload, yanzGpt, happymod, umma, ringtone, jadwalsholat, styletext, tiktokDl, facebookDl, instaStory, bk9Ai, ytMp4, ytMp3, mediafireDl, quotedLyo, simi } = require('./lib/screaper');
+const { pinterest, pinterest2, wallpaper, remini, wikimedia, quotesAnime, multiDownload, fazbotGpt, happymod, umma, ringtone, jadwalsholat, styletext, tiktokDl, facebookDl, instaStory, bk9Ai, ytMp4, ytMp3, mediafireDl, quotedLyo, simi } = require('./lib/screaper');
 const { unixTimestampSeconds, generateMessageTag, processTime, webApi, getRandom, getBuffer, fetchJson, runtime, clockString, sleep, isUrl, getTime, formatDate, tanggal, formatp, jsonformat, reSize, toHD, logic, generateProfilePicture, bytesToSize, checkBandwidth, getSizeMedia, parseMention, getGroupAdmins, readFileTxt, readFileJson, getHashedPassword, generateAuthToken, cekMenfes, generateToken, batasiTeks, randomText, isEmoji, getTypeUrlMedia, pickRandom, getAllHTML } = require('./lib/function');
 
 // Read Database
@@ -851,7 +851,7 @@ case '19rujxl1e': {
 				await naze.sendMessage(m.chat, {
 					text: `✨ *Mau Script😊?*  
 Dapatkan script premium dengan harga hanya *Rp40.000*!  
-Klik link berikut untuk info lebih lanjut:  
+Klik link berikut untuk  kontak owner:  
 🌐 https://wa.me/6285876902820`,
 					contextInfo: {
 						forwardingScore: 10,
@@ -1294,7 +1294,6 @@ Klik link berikut untuk info lebih lanjut:
 			}
 			break
 			case 'delmsg': case 'deletemsg': {
-			    if (!isPremium) return m.reply(mess.prem)
 				if (!text) return m.reply('Nama msg yg mau di delete?')
 				let msgs = db.database
 				if (text == 'allmsg') {
@@ -1596,6 +1595,31 @@ case "ssweb": {
 				m.reply(util.format(JSON.parse(img.exif.slice(22).toString())))
 			}
 			break
+			case 'manfaat': case 'manfaatpremium': case 'manfaatprem': {
+    await naze.sendMessage(m.chat, {
+        text: `*Manfaat Fitur Premium Fazbot*\n
+  Dengan menjadi pengguna *Premium* _Fazbot_- WhatsApp Bot, kamu akan mendapatkan berbagai manfaat eksklusif seperti:\n
+  • ✨ *Akses Semua Fitur Premium*: Semua fitur terbuka tanpa batasan.\n
+  • 👥 *Bebas Memasukkan Bot ke Grup WhatsApp*: Tidak ada batasan jumlah grup.\n
+  "• 🗑️ *Hapus Pesan Bot yang Tidak Diinginkan*: Kamu bisa dengan mudah menghapus pesan yang sudah dikirim oleh bot, membuat obrolanmu tetap rapi dan nyaman!"\n
+  • 💎 *Tambahan Limit Super Besar*: Mendapatkan *1000 limit* .\n
+  • 💰 *Uang Bot Fantastis*: Langsung menerima sebanyak *1.000.000* FazCoin.\n
+  • 🌟 *Pengalaman Premium Tanpa Gangguan*: Rasakan layanan terbaik tanpa hambatan.\n
+  • 🎉 *Update Eksklusif*: Mendapatkan pembaruan fitur lebih baik.\n\n
+Jadilah bagian dari pengguna premium dan nikmati layanan yang lebih memuaskan. Hubungi owner untuk aktivasi premium:\n
+📱 https://wa.me/6285876902820`,
+        contextInfo: {
+            externalAdReply: {
+                title: "Fazbot Premium",
+                body: "Klik untuk mengetahui manfaat premium",
+                mediaType: 2, // 2 untuk tautan
+                thumbnailUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhyWYx5_IFWOx3de2MtnBrwxK_r1gcNhwa6w&s", // Ubah dengan tautan gambar thumbnail yang relevan
+                mediaUrl: "https://wa.me/6285876902820", // Tautan ke WhatsApp
+            }
+        }
+    }, { quoted: m });
+}
+break
 			case 'cuaca': case 'weather': {
 				if (!text) return m.reply(`Example: ${prefix + command} jakarta`)
 				try {
@@ -1734,21 +1758,21 @@ Jika Anda ingin menyewa Fazbot, silakan hubungi🙇‍♂️:
     }, { quoted: m });
 }
 break
-case 'privacy': {
+case 'privacy': case 'privasi': {
     await naze.sendMessage(m.chat, {
         text: `*Faz Bot - WhatsApp Bot*\n
- Selamat datang di **Faz Bot**! Kami di sini untuk memberikan pelayanan terbaik melalui WhatsApp. Berikut adalah beberapa hal yang perlu Anda ketahui tentang Faz Bot:
+ Selamat datang di *Faz Bot*! Kami di sini untuk memberikan pelayanan terbaik melalui WhatsApp. Berikut adalah beberapa hal yang perlu Anda ketahui tentang Faz Bot:
 
-🔒 **Privasi Terjaga**  
+🔒 *Privasi Terjaga*  
 Kami sangat menghargai privasi Anda. Semua data yang Anda kirimkan melalui Faz Bot akan dijaga kerahasiaannya dan tidak akan dibagikan ke pihak ketiga.
 
-🔐 **Keamanan Terjamin**  
+🔐 *Keamanan Terjamin*  
 Faz Bot menggunakan sistem enkripsi untuk melindungi semua percakapan Anda. Anda dapat merasa aman dalam berinteraksi dengan bot ini.
 
-⚡ **Layanan Cepat dan Responsif**  
+⚡ *Layanan Cepat dan Responsif*  
 Faz Bot siap membantu Anda dengan berbagai informasi dan layanan secara cepat dan efisien.
 
-💬 **Tidak Ada Penyalahgunaan Data**  
+💬 *Tidak Ada Penyalahgunaan Data*  
 Faz Bot hanya menggunakan data yang diperlukan untuk memberikan layanan yang Anda minta. Kami tidak mengumpulkan data pribadi Anda untuk tujuan lain.
 
 Terima kasih telah menggunakan *Faz Bot*🤖. Kami siap membantu anda kapan saja!
@@ -1760,8 +1784,8 @@ Jika ada hal yang ingin ditanyakan, silakan hubungi🙇‍♂️:
                 title: "Fazbot-Wabot",
                 body: "Privacy Fazbot",
                 mediaType: 2, // 2 untuk tautan
-                thumbnailUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhyWYx5_IFWOx3de2MtnBrwxK_r1gcNhwa6w&s", // Ubah ke URL thumbnail yang sesuai
-                mediaUrl: "https://relaxmusic.rf.gd", // URL untuk diakses
+                thumbnailUrl: "https://drive.usercontent.google.com/download?id=1-AOR8K26Ndo0b_W0XiXApRoCA6lP6nSq&authuser=0", // Ubah ke URL thumbnail yang sesuai
+                mediaUrl: "https://donatesuport.rf.gd", // URL untuk diakses
             }
         }
     }, { quoted: m });
@@ -1770,9 +1794,12 @@ break
 case 'premium': case 'prem': {
     await naze.sendMessage(m.chat, {
         text: `*List Harga Premium Fazbot*\n
-  • 1 Bulan: *5K*
-  • 2 Bulan: *10K*
-  • 10000 Hari: *20K*\n
+  • 1 Bulan: *15K*
+  • 2 Bulan: *25K*
+  • 10000 Hari: *30K*
+  
+  ℙℝ𝔼𝕄𝕀𝕌𝕄 𝕍𝕀ℙ
+  • untuk manfaat fitur premium bisa ketik: ${prefix}manfaat\n\n
 Silakan hubungi owner untuk aktivasi premium:
 📱 https://wa.me/6285876902820`,
         contextInfo: {
@@ -1960,7 +1987,7 @@ break
 			}
 			break
 			case 'tinyurl': case 'shorturl': case 'shortlink': {
-				if (!text || !isUrl(text)) return m.reply(`Example: ${prefix + command} https://github.com/nazedev/hitori`)
+				if (!text || !isUrl(text)) return m.reply(`Example: ${prefix + command} https://github.com/faz***/bot***`)
 				try {
 					let anu = await axios.get('https://tinyurl.com/api-create.php?url=' + text)
 					m.reply('Url : ' + anu.data)
@@ -1970,7 +1997,7 @@ break
 			}
 			break
 			case 'git': case 'gitclone': {
-				if (!args[0]) return m.reply(`Example: ${prefix + command} https://github.com/nazedev/hitori`)
+				if (!args[0]) return m.reply(`Example: ${prefix + command} https://github.com/faz***/bot**`)
 				if (!isUrl(args[0]) && !args[0].includes('github.com')) return m.reply('Gunakan Url Github!')
 				let [, user, repo] = args[0].match(/(?:https|git)(?::\/\/|@)github\.com[\/:]([^\/:]+)\/(.+)/i) || []
 				try {
@@ -1986,7 +2013,7 @@ break
 			case 'ai': {
 				if (!text) return m.reply(`Example: ${prefix + command} query`)
 				try {
-					let hasil = await yanzGpt(text)
+					let hasil = await FazbotGpt(text)
 					m.reply(hasil.choices[0].message.content)
 				} catch (e) {
 					try {
@@ -3025,10 +3052,11 @@ break;
 │${setv} ${prefix}ping
 │${setv} ${prefix}privacy
 │${setv} ${prefix}afk
+│${setv} ${prefix}del Ⓟ
 │${setv} ${prefix}rvo (reply pesan satu kali lihat)
 │${setv} ${prefix}inspect (url gc)
 │${setv} ${prefix}addmsg
-│${setv} ${prefix}delmsg Ⓟ
+│${setv} ${prefix}delmsg
 │${setv} ${prefix}getmsg
 │${setv} ${prefix}listmsg
 │${setv} ${prefix}q (reply pesan)
@@ -3061,6 +3089,7 @@ break;
 ╰─┬────❍
 ╭─┴❍「 *CARI* 」❍
 │${setv} ${prefix}ytsearch (query)
+│${setv} ${prefix}spotify (query)
 │${setv} ${prefix}pixiv (query)
 │${setv} ${prefix}pinterest (query)
 │${setv} ${prefix}wallpaper (query)

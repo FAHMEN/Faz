@@ -11,7 +11,7 @@ const chalk = require('chalk');
 
 global.owner = ['6285876902820']
 global.packname = 'Fazbot'
-global.fazbot = 'wa-bot'
+global.fazbot = 'WhatsApp-bot'
 global.author = 'Fahril'
 global.faz = 'Fazbot'
 global.botname = 'Fazbot'
@@ -22,7 +22,7 @@ global.pairing_code = true
 
 global.fake = {
 	anonim: 'https://telegra.ph/file/95670d63378f7f4210f03.png',
-	thumbnailUrl: 'https://telegra.ph/file/fe4843a1261fc414542c4.jpg',
+	thumbnailUrl: 'https://drive.usercontent.google.com/download?id=1-3LW80t18wDldXom1Mu1Ta78wD0T2m7u&authuser=0',
 	thumbnail: fs.readFileSync('./src/media/naze.png'),
 	docs: fs.readFileSync('./src/media/fake.pdf'),
 	listfakedocs: ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','application/vnd.openxmlformats-officedocument.presentationml.presentation','application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/pdf'],
@@ -37,13 +37,13 @@ global.my = {
 
 global.limit = {
 	free: 80,
-	premium: 999,
+	premium: 1000,
 	vip: 'VIP'
 }
 
 global.uang = {
 	free: 10000,
-	premium: 600000,
+	premium: 1000000,
 	vip: 10000000
 }
 
