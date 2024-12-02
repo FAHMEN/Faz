@@ -45,7 +45,7 @@ const { TelegraPh, UguuSe } = require('./lib/uploader');
 const { toAudio, toPTT, toVideo } = require('./lib/converter');
 const { imageToWebp, videoToWebp, writeExif } = require('./lib/exif');
 const { rdGame, iGame, tGame, gameSlot, gameCasinoSolo, gameMerampok, gameBegal, daily, buy, setLimit, addLimit, addUang, setUang, transfer } = require('./lib/game');
-const { pinterest, pinterest2, wallpaper, remini, wikimedia, quotesAnime, multiDownload, Fazbot-Gpt, happymod, umma, ringtone, jadwalsholat, styletext, tiktokDl, facebookDl, instaStory, bk9Ai, ytMp4, ytMp3, mediafireDl, quotedLyo, simi } = require('./lib/screaper');
+const { pinterest, pinterest2, wallpaper, remini, wikimedia, quotesAnime, multiDownload, yanzGpt, happymod, umma, ringtone, jadwalsholat, styletext, tiktokDl, facebookDl, instaStory, bk9Ai, ytMp4, ytMp3, mediafireDl, quotedLyo, simi } = require('./lib/screaper');
 const { unixTimestampSeconds, generateMessageTag, processTime, webApi, getRandom, getBuffer, fetchJson, runtime, clockString, sleep, isUrl, getTime, formatDate, tanggal, formatp, jsonformat, reSize, toHD, logic, generateProfilePicture, bytesToSize, checkBandwidth, getSizeMedia, parseMention, getGroupAdmins, readFileTxt, readFileJson, getHashedPassword, generateAuthToken, cekMenfes, generateToken, batasiTeks, randomText, isEmoji, getTypeUrlMedia, pickRandom, getAllHTML } = require('./lib/function');
 
 // Read Database
@@ -1986,7 +1986,7 @@ break
 			case 'ai': {
 				if (!text) return m.reply(`Example: ${prefix + command} query`)
 				try {
-					let hasil = await Fazbot-Gpt(text)
+					let hasil = await yanzGpt(text)
 					m.reply(hasil.choices[0].message.content)
 				} catch (e) {
 					try {
