@@ -1,12 +1,6 @@
 process.on('uncaughtException', console.error)
 process.on('unhandledRejection', console.error)
 
-/*
-	* Create By Naze
-	* Follow https://github.com/nazedev
-	* Whatsapp : https://whatsapp.com/channel/0029VaWOkNm7DAWtkvkJBK43
-*/
-
 require('./settings');
 const fs = require('fs');
 const os = require('os');
@@ -1611,10 +1605,10 @@ case "ssweb": {
   • 💎 *Tambahan Limit Super Besar*: Mendapatkan *1000 limit* .\n
   • 💰 *Uang Bot Fantastis*: Langsung menerima sebanyak *1.000.000* FazCoin.\n
   • 🌟 *Pengalaman Premium Tanpa Gangguan*: Rasakan layanan terbaik tanpa hambatan.\n
-  • 🎉 *Update Eksklusif*: Mendapatkan pembaruan fitur lebih baik.\n\n
+  • 🎉 *Update Eksklusif*: Mendapatkan pembaruan fitur lebih baik.\n
+"• 🗑️ *Hapus Pesan Bot yang Tidak Diinginkan*: Kamu bisa dengan mudah menghapus pesan yang sudah dikirim oleh bot dengan mengetik ${prefix}del (reply pesan bot), sehingga membuat obrolanmu tetap rapi dan nyaman!"\n\n
 Jadilah bagian dari pengguna premium dan nikmati layanan yang lebih memuaskan.\n
-"• 🗑️ *Hapus Pesan Bot yang Tidak Diinginkan*: Kamu bisa dengan mudah menghapus pesan yang sudah dikirim oleh bot dengan mengetik ${prefix}del (reply pesan bot), sehingga membuat obrolanmu tetap rapi dan nyaman!"\n
-Hubungi owner untuk aktivasi premium:\n
+Hubungi owner untuk aktivasi premium:
 📱 https://wa.me/6285876902820`,
         contextInfo: {
             externalAdReply: {
@@ -3076,7 +3070,7 @@ break;
 ╭─┴❍「 *TAMBAHAN* 」❍
 │${setv} ${prefix}pengingat (waktu) (text) 
 │${setv} ${prefix}cekmenarik
-│${setv} ${prefix}kalori (kebutuhan kalori harianmu) 
+│${setv} ${prefix}kalori 
 ╰─┬────❍
 ╭─┴❍「 *GROUP* 」❍
 │${setv} ${prefix}add (62xxx)
