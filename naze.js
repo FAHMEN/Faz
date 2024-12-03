@@ -507,8 +507,13 @@ var notnot = JSON.parse(fs.readFileSync('./src/media/randompics/wallhp.json'))
 var hasil = pickRandom(notnot)
 await naze.sendMessage(m.chat, { caption: mess.success, image: { url: hasil.url } }, { quoted: m })
 break
-case '19rujxl1e': {
-				console.log('.')
+
+case 'fitnah': {
+				let [teks1, teks2, teks3] = text.split`|`
+				if (!isPremium) return m.reply(mess.prem)
+				if (!teks1 || !teks2 || !teks3) return m.reply(`Example : ${prefix + command} pesan target|pesan mu|nomer/tag target`)
+				let ftelo = { key: { fromMe: false, participant: teks3.replace(/[^0-9]/g, '') + '@s.whatsapp.net', ...(m.isGroup ? { remoteJid: m.chat } : { remoteJid: teks3.replace(/[^0-9]/g, '') + '@s.whatsapp.net'})}, message: { conversation: teks1 }}
+				naze.sendMessage(m.chat, { text: teks2 }, { quoted: ftelo });
 			}
 			break
 			
