@@ -503,7 +503,7 @@ case 'ig': case 'instagram': case 'instadl': case 'igdown': case 'igdl': {
 
 case 'wallpaperphone': case 'wallphone':
 let anu = await wallpaper(text)
-var notnot = JSON.parse(fs.readFileSync('./src/media/randompics/wallhp.json'))
+var notnot = JSON.parse(fs.readFileSync('./src/media/wallhp.json'))
 var hasil = pickRandom(notnot)
 await naze.sendMessage(m.chat, { caption: mess.success, image: { url: hasil.url } }, { quoted: m })
 break
